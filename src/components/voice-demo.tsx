@@ -1,96 +1,269 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  VOICE_SCENARIOS,
+  VOICE_SCRIPT,
+  type VoiceScenarioId,
+  type VoiceTurn,
+} from "@/lib/voice-scripts";
 
-type Turn = {
-  who: "caller" | "aria";
-  text: string;
-  /** ms after previous turn before this one shows */
-  delay: number;
-};
-
-const SCRIPT: Record<"new" | "after-hours" | "reschedule", Turn[]> = {
-  new: [
-    { who: "aria", text: "Thank you for calling Luxe Aesthetics, this is Aria. How can I help you today?", delay: 600 },
-    { who: "caller", text: "Hi, I was wondering how much you charge for Botox?", delay: 1800 },
-    { who: "aria", text: "Of course — our Botox starts at $13 per unit, with most patients using between 20 and 40 units. Are you new to Luxe, or have you been with us before?", delay: 1600 },
-    { who: "caller", text: "I'm new. I'd love to try it for my forehead lines.", delay: 1500 },
-    { who: "aria", text: "Wonderful. Most first-time forehead treatments are between 20 and 30 units. I have a complimentary consultation with Dr. Patel this Thursday at 3:30pm, or Friday at 11am — which works better?", delay: 1700 },
-    { who: "caller", text: "Thursday at 3:30 works.", delay: 1200 },
-    { who: "aria", text: "Perfect, I'm holding Thursday at 3:30pm with Dr. Patel. Can I grab your full name and a mobile number for the confirmation text?", delay: 1500 },
-    { who: "caller", text: "Sarah Reeves, 512-555-4801.", delay: 1400 },
-    { who: "aria", text: "Booked. You'll get a text right now with the appointment and our pre-care checklist. We'll see you Thursday, Sarah!", delay: 1500 },
-  ],
-  "after-hours": [
-    { who: "aria", text: "Thanks for calling Luxe Aesthetics — we're closed for the evening, but I can help you book right now. What were you hoping to learn about?", delay: 700 },
-    { who: "caller", text: "I saw your Morpheus8 special on Instagram, can I get info?", delay: 1700 },
-    { who: "aria", text: "Yes! Our holiday Morpheus8 package is three sessions for $2,100 — typically $2,700. Is this for face, neck, or both?", delay: 1600 },
-    { who: "caller", text: "Face and neck.", delay: 1100 },
-    { who: "aria", text: "Lovely. I have a complimentary consultation tomorrow at 10am with Dr. Patel, or Saturday at 1pm. Which works?", delay: 1500 },
-    { who: "caller", text: "Saturday 1pm.", delay: 1000 },
-    { who: "aria", text: "Booked. Sending confirmation by text and email now. See you Saturday!", delay: 1300 },
-  ],
-  reschedule: [
-    { who: "aria", text: "Hi Sarah, this is Aria from Luxe Aesthetics — I'm calling because we missed you for your 3:30 today. I'd love to help you reschedule. Is now a good time?", delay: 700 },
-    { who: "caller", text: "Oh shoot, I totally forgot. Yes, I want to reschedule.", delay: 1700 },
-    { who: "aria", text: "No problem — these things happen. I have Friday at 11am or Monday at 2pm with Dr. Patel. Any preference?", delay: 1500 },
-    { who: "caller", text: "Friday 11am.", delay: 1000 },
-    { who: "aria", text: "Done. You'll get a fresh confirmation text, plus a friendly reminder the day before. Thanks Sarah, see you Friday.", delay: 1500 },
-  ],
-};
-
-const SCENARIOS: { id: keyof typeof SCRIPT; label: string; sub: string }[] = [
-  { id: "new", label: "New patient inquiry", sub: "9:42 AM · Tuesday" },
-  { id: "after-hours", label: "After‑hours booking", sub: "10:18 PM · Friday" },
-  { id: "reschedule", label: "No‑show recovery", sub: "30 min after missed appt" },
-];
-
+/**
+ * Plays a scripted call between Aria and a caller.
+ *
+ * Audio strategy (in order of preference):
+ *   1) MP3 files at `/voice/<scenario>/<who>-<index>.mp3` (generated via
+ *      `npm run voice:generate`). Best quality.
+ *   2) Browser `speechSynthesis` API. Free, no API key, mediocre quality.
+ *   3) Fixed-delay text-only playback (silent fallback if 1 and 2 fail).
+ *
+ * The stop button cancels every queued timeout, the current audio element,
+ * and any in-flight speechSynthesis utterance — fixing the bug where stopping
+ * mid-call did nothing.
+ */
 export function VoiceDemo() {
-  const [scenarioId, setScenarioId] = useState<keyof typeof SCRIPT>("new");
+  const [scenarioId, setScenarioId] = useState<VoiceScenarioId>("new");
   const [playing, setPlaying] = useState(false);
   const [turnsShown, setTurnsShown] = useState(0);
   const [elapsed, setElapsed] = useState(0);
-  const timerRef = useRef<number | null>(null);
+  const [audioMode, setAudioMode] = useState<"file" | "speech" | "silent">("silent");
+
+  // Refs hold everything that needs to be cancelled when the user stops the
+  // call. Storing them in state would cause re-renders we don't want.
   const tickRef = useRef<number | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const pauseTimeoutRef = useRef<number | null>(null);
+  const cancelledRef = useRef(false);
+  const speechVoicesRef = useRef<{ aria?: SpeechSynthesisVoice; caller?: SpeechSynthesisVoice }>({});
   const transcriptRef = useRef<HTMLDivElement>(null);
 
-  const script = SCRIPT[scenarioId];
+  const script = VOICE_SCRIPT[scenarioId];
 
-  function reset() {
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    if (tickRef.current) window.clearInterval(tickRef.current);
+  const scenarioMeta = useMemo(
+    () => VOICE_SCENARIOS.find((s) => s.id === scenarioId),
+    [scenarioId],
+  );
+
+  // Pick the best available voices once when the SpeechSynthesis API has
+  // loaded its voice list.
+  useEffect(() => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+
+    function pickVoices() {
+      const all = window.speechSynthesis.getVoices().filter((v) => v.lang.startsWith("en"));
+      if (all.length === 0) return;
+      const female =
+        all.find((v) => /samantha|jenny|aria|female|google us english/i.test(v.name)) ||
+        all.find((v) => v.name.toLowerCase().includes("female")) ||
+        all[0];
+      const male =
+        all.find((v) => /daniel|alex|guy|david|male/i.test(v.name)) ||
+        all.find((v) => v !== female) ||
+        all[0];
+      speechVoicesRef.current = { aria: female, caller: male };
+    }
+
+    pickVoices();
+    window.speechSynthesis.addEventListener("voiceschanged", pickVoices);
+    return () => window.speechSynthesis.removeEventListener("voiceschanged", pickVoices);
+  }, []);
+
+  const stopAllAudio = useCallback(() => {
+    cancelledRef.current = true;
+    if (audioRef.current) {
+      try {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+      } catch {}
+      audioRef.current = null;
+    }
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      try {
+        window.speechSynthesis.cancel();
+      } catch {}
+    }
+    utteranceRef.current = null;
+    if (pauseTimeoutRef.current !== null) {
+      window.clearTimeout(pauseTimeoutRef.current);
+      pauseTimeoutRef.current = null;
+    }
+  }, []);
+
+  const stop = useCallback(() => {
+    stopAllAudio();
+    if (tickRef.current !== null) {
+      window.clearInterval(tickRef.current);
+      tickRef.current = null;
+    }
+    setPlaying(false);
+  }, [stopAllAudio]);
+
+  const reset = useCallback(() => {
+    stop();
     setTurnsShown(0);
     setElapsed(0);
-    setPlaying(false);
-  }
+  }, [stop]);
 
-  function start() {
+  const start = useCallback(async () => {
     reset();
+    cancelledRef.current = false;
     setPlaying(true);
-    setTurnsShown(0);
-
-    let cumulative = 0;
-    script.forEach((turn, i) => {
-      cumulative += turn.delay;
-      const id = window.setTimeout(() => {
-        setTurnsShown(i + 1);
-        if (i === script.length - 1) {
-          window.setTimeout(() => setPlaying(false), 1200);
-        }
-      }, cumulative);
-      if (i === 0) timerRef.current = id;
-    });
 
     tickRef.current = window.setInterval(() => {
       setElapsed((e) => e + 1);
     }, 1000);
+
+    await playSequence(script, scenarioId);
+
+    if (cancelledRef.current) return;
+    // Linger on the booked confirmation for a moment, then mark as done.
+    pauseTimeoutRef.current = window.setTimeout(() => {
+      if (tickRef.current !== null) {
+        window.clearInterval(tickRef.current);
+        tickRef.current = null;
+      }
+      setPlaying(false);
+    }, 1200);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scenarioId, reset]);
+
+  async function playSequence(turns: VoiceTurn[], scenario: VoiceScenarioId) {
+    for (let i = 0; i < turns.length; i++) {
+      if (cancelledRef.current) return;
+      const turn = turns[i];
+      setTurnsShown(i + 1);
+      await new Promise((r) => requestAnimationFrame(() => r(null))); // let the bubble render before audio starts
+      const played = await tryPlayAudio(turn, scenario, i);
+      if (cancelledRef.current) return;
+      if (!played) {
+        // No audio available — fall back to the scripted delay so the
+        // transcript still has natural pacing.
+        await wait(Math.max(900, turn.delay));
+      }
+      if (cancelledRef.current) return;
+      // Small natural gap between turns.
+      await wait(280);
+    }
   }
 
-  useEffect(() => {
-    if (!playing && tickRef.current) {
-      window.clearInterval(tickRef.current);
+  async function tryPlayAudio(turn: VoiceTurn, scenario: VoiceScenarioId, index: number): Promise<boolean> {
+    const src = `/voice/${scenario}/${turn.who}-${index}.mp3`;
+    const fileOk = await playFile(src);
+    if (fileOk === "ok") {
+      setAudioMode("file");
+      return true;
     }
-  }, [playing]);
+    if (cancelledRef.current) return true;
+    if (fileOk === "missing") {
+      const spoke = await speakText(turn);
+      if (spoke) {
+        setAudioMode("speech");
+        return true;
+      }
+      setAudioMode("silent");
+    }
+    return false;
+  }
+
+  function playFile(src: string): Promise<"ok" | "missing" | "cancelled"> {
+    return new Promise((resolve) => {
+      if (typeof window === "undefined") return resolve("missing");
+      const audio = new Audio(src);
+      audio.preload = "auto";
+      audioRef.current = audio;
+
+      let settled = false;
+      const finish = (result: "ok" | "missing" | "cancelled") => {
+        if (settled) return;
+        settled = true;
+        audio.onended = null;
+        audio.onerror = null;
+        audio.oncanplay = null;
+        resolve(result);
+      };
+
+      audio.onended = () => finish("ok");
+      audio.onerror = () => finish("missing");
+
+      audio.play().catch(() => finish("missing"));
+
+      // If we get cancelled mid-clip the parent will pause the audio and
+      // null out audioRef; we should resolve quickly so the loop exits.
+      const cancelPoll = window.setInterval(() => {
+        if (cancelledRef.current) {
+          window.clearInterval(cancelPoll);
+          finish("cancelled");
+        } else if (settled) {
+          window.clearInterval(cancelPoll);
+        }
+      }, 80);
+    });
+  }
+
+  function speakText(turn: VoiceTurn): Promise<boolean> {
+    return new Promise((resolve) => {
+      if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+        return resolve(false);
+      }
+      try {
+        const utter = new SpeechSynthesisUtterance(turn.text);
+        const voice = speechVoicesRef.current[turn.who];
+        if (voice) utter.voice = voice;
+        utter.rate = turn.who === "aria" ? 1.0 : 1.05;
+        utter.pitch = turn.who === "aria" ? 1.05 : 0.95;
+        utter.volume = 1;
+        utteranceRef.current = utter;
+
+        let settled = false;
+        const finish = (ok: boolean) => {
+          if (settled) return;
+          settled = true;
+          utter.onend = null;
+          utter.onerror = null;
+          resolve(ok);
+        };
+
+        utter.onend = () => finish(true);
+        utter.onerror = () => finish(false);
+        window.speechSynthesis.speak(utter);
+
+        // Safety net: if speech doesn't start within 5s, give up so the loop
+        // doesn't stall forever (some browsers throttle background tabs).
+        const watchdog = window.setTimeout(() => finish(false), 25_000);
+
+        const cancelPoll = window.setInterval(() => {
+          if (cancelledRef.current) {
+            window.clearInterval(cancelPoll);
+            window.clearTimeout(watchdog);
+            try {
+              window.speechSynthesis.cancel();
+            } catch {}
+            finish(true);
+          } else if (settled) {
+            window.clearInterval(cancelPoll);
+            window.clearTimeout(watchdog);
+          }
+        }, 80);
+      } catch {
+        resolve(false);
+      }
+    });
+  }
+
+  function wait(ms: number): Promise<void> {
+    return new Promise((resolve) => {
+      const id = window.setTimeout(() => resolve(), ms);
+      // If cancelled, short-circuit the wait.
+      const cancelPoll = window.setInterval(() => {
+        if (cancelledRef.current) {
+          window.clearTimeout(id);
+          window.clearInterval(cancelPoll);
+          resolve();
+        }
+      }, 60);
+    });
+  }
 
   useEffect(() => {
     if (transcriptRef.current) {
@@ -98,7 +271,25 @@ export function VoiceDemo() {
     }
   }, [turnsShown]);
 
-  useEffect(() => () => reset(), []);
+  useEffect(
+    () => () => {
+      // Unmount cleanup — kill all timers / audio / speech.
+      cancelledRef.current = true;
+      stopAllAudio();
+      if (tickRef.current !== null) {
+        window.clearInterval(tickRef.current);
+        tickRef.current = null;
+      }
+    },
+    [stopAllAudio],
+  );
+
+  // When the user switches scenarios while a call is running, fully reset.
+  function pickScenario(id: VoiceScenarioId) {
+    if (id === scenarioId) return;
+    reset();
+    setScenarioId(id);
+  }
 
   const visible = script.slice(0, turnsShown);
   const lastTurn = visible[visible.length - 1];
@@ -115,7 +306,7 @@ export function VoiceDemo() {
           <div className="flex items-center gap-2.5">
             <span className="size-2 rounded-full bg-emerald" />
             <span className="font-mono text-[0.7rem] uppercase tracking-widest text-ink-soft">
-              Incoming call · {SCENARIOS.find((s) => s.id === scenarioId)?.sub}
+              Incoming call · {scenarioMeta?.sub}
             </span>
           </div>
           <span className="font-mono text-[0.7rem] text-ink-faint">
@@ -135,7 +326,14 @@ export function VoiceDemo() {
           <div className="flex-1">
             <div className="font-serif text-xl">Aria · Luxe Aesthetics</div>
             <div className="text-sm text-ink-faint">
-              Voice: <span className="text-ink-soft">&quot;Rachel&quot; — warm female, US</span>
+              Voice:{" "}
+              <span className="text-ink-soft">
+                {audioMode === "file"
+                  ? '"Shimmer" — OpenAI TTS'
+                  : audioMode === "speech"
+                    ? "Browser TTS (fallback)"
+                    : "Text only — add audio with npm run voice:generate"}
+              </span>
             </div>
           </div>
           <Waveform active={playing} />
@@ -184,7 +382,7 @@ export function VoiceDemo() {
             Real Aria deployments answer in 1.8s avg · ElevenLabs voice + Vapi orchestration
           </div>
           <button
-            onClick={playing ? reset : start}
+            onClick={playing ? stop : start}
             className="btn-primary text-sm"
             aria-label={playing ? "Stop demo" : "Start demo"}
           >
@@ -203,13 +401,10 @@ export function VoiceDemo() {
           Each scenario reflects an actual flow we deploy — including knowledge of your menu, pricing, providers and after‑hours protocol.
         </p>
         <ul className="space-y-2">
-          {SCENARIOS.map((s) => (
+          {VOICE_SCENARIOS.map((s) => (
             <li key={s.id}>
               <button
-                onClick={() => {
-                  setScenarioId(s.id);
-                  reset();
-                }}
+                onClick={() => pickScenario(s.id)}
                 className={[
                   "w-full text-left rounded-2xl border px-4 py-3 transition-all",
                   scenarioId === s.id
@@ -235,7 +430,7 @@ export function VoiceDemo() {
   );
 }
 
-function TranscriptBubble({ turn }: { turn: Turn }) {
+function TranscriptBubble({ turn }: { turn: VoiceTurn }) {
   const isAria = turn.who === "aria";
   return (
     <div className={`rise flex ${isAria ? "justify-start" : "justify-end"}`}>

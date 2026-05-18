@@ -1,13 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-type Msg = { who: "you" | "aria"; text: string; tag?: string };
+type Msg = { who: "you" | "aria" | "system"; text: string; tag?: string };
 
-type Intent = {
-  keywords: string[];
-  reply: (q: string) => Msg | Msg[];
-};
+type ChatStatus = "active" | "wrapping" | "ended";
 
 const GREETING: Msg = {
   who: "aria",
@@ -25,165 +22,36 @@ const QUICK = [
   "What's your address?",
 ];
 
-const INTENTS: Intent[] = [
-  {
-    keywords: ["botox", "tox", "wrinkle"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "Of course — our Botox starts at $13/unit. Most patients use 20–40 units depending on areas treated. Forehead-only is usually 20–25u (~$260–$325). Want me to pencil in a complimentary consult with Dr. Patel this week?",
-    }),
-  },
-  {
-    keywords: ["filler", "lip", "cheek", "jaw"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "Jawline filler typically runs $1,400–$2,200 (most patients need 2–3 syringes) and lip filler starts at $750/syringe. Both include a complimentary consult with Dr. Patel. Want a slot Thursday or Friday?",
-    }),
-  },
-  {
-    keywords: ["morpheus", "skin tightening", "rf microneedling"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "Our holiday Morpheus8 package is 3 sessions for $2,100 (normally $2,700). Includes pre/post-care kit and a follow-up two weeks after. I can hold a consult Saturday at 1pm — interested?",
-    }),
-  },
-  {
-    keywords: ["hydrafacial", "facial", "peel"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "Signature Hydrafacial is $185, the Deluxe is $245, and Platinum (includes LED + lymphatic) is $295. Lunchtime slots are popular — I have openings tomorrow at 12pm or 12:45pm.",
-    }),
-  },
-  {
-    keywords: ["tonight", "after hours", "late", "evening", "right now"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "We're closed for treatments after 7pm, but I can book any morning, afternoon or evening slot through Saturday — and confirm by text in 10 seconds. What treatment were you thinking?",
-    }),
-  },
-  {
-    keywords: ["book", "schedule", "appointment", "consult", "consultation"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "Happy to book it. I'll need a few seconds — what treatment, which provider (or 'any'), and which day works for you? I'll text you confirmation while we're still on this thread.",
-    }),
-  },
-  {
-    keywords: ["price", "pricing", "cost", "how much"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "Most-asked prices: Botox $13/unit · Lip filler from $750 · Hydrafacial from $185 · Morpheus8 from $700/session. Anything specific you want a quote on?",
-    }),
-  },
-  {
-    keywords: ["payment", "credit", "carecredit", "financing", "afford"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "We accept all major cards, CareCredit, Cherry, and offer 0% financing through Affirm for packages over $1,000. Want me to text you the financing link?",
-    }),
-  },
-  {
-    keywords: ["address", "where", "location", "directions", "park"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "We're at 1820 Whitis Ave, Suite 200, Austin TX 78705 — free valet at the door. Closest cross street: MLK Jr Blvd. Want me to text you the link?",
-    }),
-  },
-  {
-    keywords: ["hour", "open", "closed", "time"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "Mon–Fri 9am–7pm and Saturday 10am–4pm. Last appointment 45 minutes before close. Want me to find a slot?",
-    }),
-  },
-  {
-    keywords: ["miss", "no show", "missed", "didn't come", "rescheduled"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "No worries — these things happen. We waive the no-show fee for first-time skips and I can rebook you in 20 seconds. Want Friday 11am or Monday 2pm?",
-    }),
-  },
-  {
-    keywords: ["human", "real person", "talk to a human", "agent", "not ai", "is this ai"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "Yes, I'm Aria — Luxe's AI front desk. I can hand you off to our team during business hours (Mon–Sat). Want me to text our concierge to call you within 15 minutes?",
-    }),
-  },
-  {
-    keywords: ["hipaa", "private", "data", "record"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "Conversations are recorded with disclosure and stored under HIPAA-grade transmission. We don't share data outside the clinic and any sensitive medical question is routed to a human provider.",
-    }),
-  },
-  {
-    keywords: ["hello", "hi", "hey", "good morning", "good evening"],
-    reply: () => ({
-      who: "aria",
-      text:
-        "Hi! 👋 Happy to help. Want pricing on something, a quick booking, or a recommendation for first-time patients?",
-    }),
-  },
-  {
-    keywords: ["thanks", "thank you", "ty"],
-    reply: () => ({
-      who: "aria",
-      text: "Anytime. I'll be here 24/7 — just message or call.",
-    }),
-  },
-];
+const SOFT_LIMIT = 20;
+const HARD_LIMIT = 30;
+const SESSION_STORAGE_KEY = "aria-sandbox-session";
 
-function findIntent(text: string): Msg {
-  const q = text.toLowerCase();
-
-  // Pattern: "book me ___ at ___" — extract simple slot
-  const slotMatch = q.match(/(book|schedule).*?(mon|tue|wed|thu|fri|sat|sun|tomorrow|tonight)\s*(at\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)?)?/i);
-  if (slotMatch) {
-    const day = slotMatch[2];
-    const hour = slotMatch[4];
-    const min = slotMatch[5] ?? "00";
-    const ampm = slotMatch[6] ?? "";
-    const slot = hour ? `${day} at ${hour}:${min}${ampm}` : `${day}`;
-    return {
-      who: "aria",
-      text: `Got it — pencilling in ${slot}. What's the treatment, and can I grab a mobile number for the confirmation text?`,
-      tag: "Slot held",
-    };
+function generateSessionId(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID().replace(/-/g, "");
   }
-
-  for (const intent of INTENTS) {
-    if (intent.keywords.some((k) => q.includes(k))) {
-      const r = intent.reply(text);
-      return Array.isArray(r) ? r[0] : r;
-    }
-  }
-
-  return {
-    who: "aria",
-    text:
-      "Good question — I'd want to confirm that with our team. Want me to text our concierge to follow up within the hour, or would you like to pick a consult slot instead?",
-  };
+  return Math.random().toString(36).slice(2) + Date.now().toString(36);
 }
 
 export function AskAria() {
   const [messages, setMessages] = useState<Msg[]>([GREETING]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
+  const [status, setStatus] = useState<ChatStatus>("active");
+  const [turn, setTurn] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+  const sessionRef = useRef<string>("");
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let id = window.sessionStorage.getItem(SESSION_STORAGE_KEY);
+    if (!id) {
+      id = generateSessionId();
+      window.sessionStorage.setItem(SESSION_STORAGE_KEY, id);
+    }
+    sessionRef.current = id;
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -191,20 +59,111 @@ export function AskAria() {
     }
   }, [messages, typing]);
 
-  function send(text: string) {
-    const trimmed = text.trim();
-    if (!trimmed) return;
-    const userMsg: Msg = { who: "you", text: trimmed };
-    setMessages((prev) => [...prev, userMsg]);
+  const reset = useCallback(() => {
+    const id = generateSessionId();
+    sessionRef.current = id;
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(SESSION_STORAGE_KEY, id);
+    }
+    setMessages([GREETING]);
+    setStatus("active");
+    setTurn(0);
+    setError(null);
+    setTyping(false);
     setInput("");
-    setTyping(true);
+  }, []);
 
-    window.setTimeout(() => {
-      const reply = findIntent(trimmed);
-      setMessages((prev) => [...prev, reply]);
-      setTyping(false);
-    }, 700 + Math.random() * 700);
-  }
+  const send = useCallback(
+    async (text: string) => {
+      const trimmed = text.trim();
+      if (!trimmed || typing || status === "ended") return;
+
+      setError(null);
+      const userMsg: Msg = { who: "you", text: trimmed };
+      const nextMessages = [...messages, userMsg];
+      setMessages(nextMessages);
+      setInput("");
+      setTyping(true);
+
+      const apiMessages = nextMessages
+        .filter((m) => m.who === "you" || m.who === "aria")
+        .map((m) => ({
+          role: (m.who === "you" ? "user" : "assistant") as "user" | "assistant",
+          content: m.text,
+        }));
+
+      // Drop the very first greeting from history since it's assistant-led with no prior user turn;
+      // OpenAI will still accept it, but trimming keeps the prompt clean.
+      if (apiMessages.length > 0 && apiMessages[0].role === "assistant") {
+        apiMessages.shift();
+      }
+
+      try {
+        const res = await fetch("/api/aria/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sessionId: sessionRef.current,
+            messages: apiMessages,
+          }),
+        });
+
+        const data = (await res.json()) as
+          | { message: string; turn: number; status: ChatStatus }
+          | { error: string; detail?: string };
+
+        if (!res.ok || "error" in data) {
+          const detail =
+            "detail" in data && data.detail ? data.detail : `Request failed (${res.status}).`;
+          const friendly =
+            res.status === 429
+              ? "Slow down — you're sending messages too quickly. Try again in a moment."
+              : "error" in data && data.error === "missing_api_key"
+                ? "The site owner hasn't set OPENAI_API_KEY yet. See aria/.env.local.example."
+                : detail;
+          setError(friendly);
+          setMessages((prev) => [
+            ...prev,
+            {
+              who: "system",
+              text: friendly,
+            },
+          ]);
+          return;
+        }
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            who: "aria",
+            text: data.message,
+            tag: data.status === "wrapping" ? "Wrapping up" : undefined,
+          },
+        ]);
+        setStatus(data.status);
+        setTurn(data.turn);
+      } catch (err) {
+        const detail = err instanceof Error ? err.message : "Network error.";
+        setError(detail);
+        setMessages((prev) => [
+          ...prev,
+          { who: "system", text: `Couldn't reach Aria — ${detail}` },
+        ]);
+      } finally {
+        setTyping(false);
+      }
+    },
+    [messages, status, typing],
+  );
+
+  const turnsRemaining = Math.max(0, HARD_LIMIT - turn);
+  const inputDisabled = typing || status === "ended";
+
+  const counterColor = useMemo(() => {
+    if (status === "ended") return "text-danger";
+    if (status === "wrapping" || turn >= SOFT_LIMIT - 2) return "text-rose";
+    return "text-ink-faint";
+  }, [status, turn]);
 
   return (
     <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-12">
@@ -228,7 +187,8 @@ export function AskAria() {
               <li key={q}>
                 <button
                   onClick={() => send(q)}
-                  className="rounded-full border border-line bg-bg-elev/60 px-3 py-1.5 text-xs text-ink-soft transition-colors hover:border-emerald hover:text-ink"
+                  disabled={inputDisabled}
+                  className="rounded-full border border-line bg-bg-elev/60 px-3 py-1.5 text-xs text-ink-soft transition-colors hover:border-emerald hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {q}
                 </button>
@@ -239,7 +199,8 @@ export function AskAria() {
 
         <div className="mt-6 rounded-2xl border border-dashed border-line bg-bg-soft/40 p-4 text-xs text-ink-soft">
           <strong className="text-ink">Note:</strong> this is a public sandbox with no scheduler
-          attached. In your deployment Aria reads live availability and books in-call.
+          attached — and conversations are capped at {HARD_LIMIT} turns to keep the demo affordable.
+          In your deployment Aria reads live availability and books in-call.
         </div>
       </div>
 
@@ -252,16 +213,21 @@ export function AskAria() {
             <div>
               <div className="text-sm font-medium">Aria · Luxe Aesthetics</div>
               <div className="font-mono text-[0.65rem] uppercase tracking-widest text-emerald">
-                Sandbox · live
+                Sandbox · live · gpt
               </div>
             </div>
           </div>
-          <button
-            onClick={() => setMessages([GREETING])}
-            className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint hover:text-ink"
-          >
-            Reset
-          </button>
+          <div className="flex items-center gap-3">
+            <span className={`font-mono text-[0.65rem] uppercase tracking-widest ${counterColor}`}>
+              {status === "ended" ? "Demo ended" : `${turnsRemaining} turns left`}
+            </span>
+            <button
+              onClick={reset}
+              className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint hover:text-ink"
+            >
+              Reset
+            </button>
+          </div>
         </div>
 
         <div
@@ -274,47 +240,83 @@ export function AskAria() {
           {typing && <Typing />}
         </div>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            send(input);
-          }}
-          className="flex items-center gap-2 border-t border-line bg-bg-soft/40 px-3 py-3"
-        >
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask anything…"
-            className="flex-1 rounded-full border border-line bg-bg-elev/70 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-emerald"
-          />
-          <button
-            type="submit"
-            aria-label="Send"
-            className="grid size-10 place-items-center rounded-full bg-ink text-bg transition-transform hover:translate-x-0.5"
+        {status === "ended" ? (
+          <div className="flex flex-col items-start gap-2 border-t border-line bg-bg-soft/60 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs text-ink-soft">
+              Demo limit reached ({HARD_LIMIT} turns). Want the real thing for your clinic?
+            </p>
+            <button
+              onClick={reset}
+              className="btn-ghost text-xs"
+            >
+              Start over
+            </button>
+          </div>
+        ) : (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              send(input);
+            }}
+            className="flex items-center gap-2 border-t border-line bg-bg-soft/40 px-3 py-3"
           >
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M2 8 L14 8 M9 3 L14 8 L9 13"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-        </form>
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={
+                status === "wrapping"
+                  ? "Aria's about to wrap up — last few replies…"
+                  : "Ask anything…"
+              }
+              disabled={inputDisabled}
+              maxLength={800}
+              className="flex-1 rounded-full border border-line bg-bg-elev/70 px-4 py-2.5 text-sm text-ink outline-none transition-colors focus:border-emerald disabled:opacity-60"
+            />
+            <button
+              type="submit"
+              aria-label="Send"
+              disabled={inputDisabled || !input.trim()}
+              className="grid size-10 place-items-center rounded-full bg-ink text-bg transition-transform hover:translate-x-0.5 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M2 8 L14 8 M9 3 L14 8 L9 13"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </form>
+        )}
+        {error && status !== "ended" && (
+          <div className="border-t border-line bg-danger/10 px-4 py-2 text-xs text-danger">
+            {error}
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
 function Bubble({ msg }: { msg: Msg }) {
+  if (msg.who === "system") {
+    return (
+      <div className="flex justify-center">
+        <div className="rounded-full border border-dashed border-line bg-bg-soft/60 px-3 py-1 font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">
+          {msg.text}
+        </div>
+      </div>
+    );
+  }
+
   const isAria = msg.who === "aria";
   return (
     <div className={`rise flex flex-col ${isAria ? "items-start" : "items-end"}`}>
       <div
         className={[
-          "max-w-[82%] rounded-2xl px-3.5 py-2.5 text-[0.92rem] leading-relaxed",
+          "max-w-[82%] whitespace-pre-wrap rounded-2xl px-3.5 py-2.5 text-[0.92rem] leading-relaxed",
           isAria
             ? "bg-bg-soft/70 text-ink border border-line"
             : "bg-accent-bg text-accent-fg",

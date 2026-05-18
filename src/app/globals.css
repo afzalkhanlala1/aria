@@ -3,70 +3,78 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ──────────────────────────────────────────────────────────────────────
-   LIGHT THEME — paper, ink, emerald.
-   Distinctive boutique-aesthetic palette, but sharper than v1.
+   LIGHT THEME — "Boutique Console"
+   Warm cream paper · burnt copper accent · deep aubergine on dark panels.
+   Distinctive med-spa premium feel; deliberately avoids the generic
+   AI-green palette every competitor uses.
+   The CSS variable names still say "emerald" for backwards compatibility
+   with components — the actual color is a rich burnt-copper.
    ────────────────────────────────────────────────────────────────────── */
 :root {
-  --bg:           #f4efe7;
-  --bg-soft:      #ede6d8;
+  --bg:           #f4ecdb;
+  --bg-soft:      #ede2c5;
   --bg-elev:      #ffffff;
-  --ink:          #0a0c0b;
-  --ink-soft:     #38423f;
-  --ink-faint:    #6c7672;
-  --line:         #d9d2c1;
-  --line-soft:    #e7e0d0;
-  --emerald:      #0e4a3f;
-  --emerald-soft: #cfe0d8;
-  --emerald-deep: #062018;
-  --emerald-glow: rgba(14, 74, 63, 0.45);
-  --gold:         #b89b6e;
-  --rose:         #c9a687;
-  --danger:       #b4321a;
-  --success:      #1f6a4d;
-  --grid:         rgba(13, 15, 14, 0.06);
-  --grid-fade:    rgba(244, 239, 231, 0);
-  --halo:         rgba(14, 74, 63, 0.16);
-  --paper:        #f4efe7;
-  --accent-bg:    #062018;
-  --accent-fg:    #f1ece2;
-  --accent-emerald: #3ee2a8;
+  --ink:          #14110e;
+  --ink-soft:     #45403a;
+  --ink-faint:    #837b6f;
+  --line:         #d6c9ad;
+  --line-soft:    #e8dcc1;
+  --emerald:      #b1431c;          /* burnt copper — primary brand accent */
+  --emerald-soft: #f4dccb;
+  --emerald-deep: #2a0d04;
+  --emerald-glow: rgba(177, 67, 28, 0.42);
+  --gold:         #c4a14a;
+  --rose:         #d68b69;
+  --danger:       #a01e30;
+  --success:      #2f7a4f;          /* muted sage — used only for "booked/success", never as primary brand */
+  --grid:         rgba(20, 17, 14, 0.05);
+  --grid-fade:    rgba(244, 236, 219, 0);
+  --halo:         rgba(177, 67, 28, 0.18);
+  --paper:        #f4ecdb;
+  --accent-bg:    #1d1410;          /* deep walnut for inverted panels */
+  --accent-fg:    #f4ecdb;
+  --accent-emerald: #f8bb7d;        /* luminous amber for "live" dots & emphasis on dark surfaces */
   --accent-soft:  rgba(255, 255, 255, 0.06);
-  --accent-line:  rgba(207, 224, 216, 0.18);
+  --accent-line:  rgba(248, 187, 125, 0.22);
 
   color-scheme: light;
 }
 
 /* ──────────────────────────────────────────────────────────────────────
-   DARK THEME — midnight, glow, neon-emerald.
-   Sharp, futuristic. Designed against Vapi/ElevenLabs/Bland aesthetic
-   without being a knockoff (warm peach accents keep the brand DNA).
+   DARK THEME — "Velvet Hour"
+   Deep midnight (slight violet, never green-tinted) · warm cream type ·
+   amber primary accent. Specifically tuned for readability:
+     · ink/ink-soft are warm beige not cool grey
+     · primary accent is amber, distinct from competitor palettes
+       (Vapi blue, Retell cyan, generic Cursor green)
+     · success keeps a clear sage so "booked" never reads as the brand color
    ────────────────────────────────────────────────────────────────────── */
 .dark {
-  --bg:           #060809;
-  --bg-soft:      #0b0f12;
-  --bg-elev:      #0f1418;
-  --ink:          #f1efe8;
-  --ink-soft:     #b9bfbe;
-  --ink-faint:    #6a7479;
-  --line:         #1b2127;
-  --line-soft:    #131a1f;
-  --emerald:      #3ee2a8;
-  --emerald-soft: #15302a;
-  --emerald-deep: #062018;
-  --emerald-glow: rgba(62, 226, 168, 0.55);
-  --gold:         #e8c581;
+  --bg:           #0a0814;
+  --bg-soft:      #11101e;
+  --bg-elev:      #16162a;
+  --ink:          #f4ecd9;          /* warm cream — high readability */
+  --ink-soft:     #cdc4ae;          /* warmer beige-grey (was cool grey) */
+  --ink-faint:    #8a8273;
+  --line:         #23213a;
+  --line-soft:    #1a1828;
+  --emerald:      #f5b97f;          /* warm amber primary */
+  --emerald-soft: #2b1d12;
+  --emerald-deep: #1a1208;
+  --emerald-glow: rgba(245, 185, 127, 0.5);
+  --gold:         #f0c976;
   --rose:         #f3b89b;
-  --danger:       #ff5e5e;
-  --success:      #3ee2a8;
-  --grid:         rgba(255, 255, 255, 0.045);
-  --grid-fade:    rgba(6, 8, 9, 0);
-  --halo:         rgba(62, 226, 168, 0.25);
-  --paper:        #f1efe8;
-  --accent-bg:    #0a1d18;
-  --accent-fg:    #ecf6f1;
-  --accent-emerald: #3ee2a8;
-  --accent-soft:  rgba(62, 226, 168, 0.08);
-  --accent-line:  rgba(62, 226, 168, 0.18);
+  --danger:       #ff6b6b;
+  --success:      #84d6a1;          /* keep a sage success indicator, distinct from amber primary */
+  --grid:         rgba(255, 255, 255, 0.04);
+  --grid-fade:    rgba(10, 8, 20, 0);
+  --halo:         rgba(245, 185, 127, 0.22);
+  --paper:        #f4ecd9;
+  --accent-bg:    #1a1426;          /* deep aubergine for inverted panels */
+  --accent-fg:    #f4ecd9;
+  --accent-emerald: #ffc78a;        /* luminous amber for "live" dots & emphasis on dark surfaces */
+  --accent-soft:  rgba(245, 185, 127, 0.10);
+  --accent-line:  rgba(245, 185, 127, 0.22);
 
   color-scheme: dark;
 }
@@ -172,9 +180,9 @@ body {
 }
 .dark .mesh {
   background:
-    radial-gradient(60% 50% at 20% 10%, rgba(62, 226, 168, 0.18) 0%, transparent 60%),
-    radial-gradient(50% 50% at 90% 20%, rgba(243, 184, 155, 0.10) 0%, transparent 65%),
-    radial-gradient(60% 60% at 60% 100%, rgba(62, 226, 168, 0.12) 0%, transparent 60%);
+    radial-gradient(60% 50% at 20% 10%, rgba(245, 185, 127, 0.16) 0%, transparent 60%),
+    radial-gradient(50% 50% at 90% 20%, rgba(178, 132, 220, 0.12) 0%, transparent 65%),
+    radial-gradient(60% 60% at 60% 100%, rgba(245, 185, 127, 0.10) 0%, transparent 60%);
 }
 
 /* ── Animations ───────────────────────────────────────────────────── */
@@ -272,12 +280,12 @@ html { scroll-behavior: smooth; }
 
 .dark .btn-primary {
   background: var(--emerald);
-  color: #06120e;
-  box-shadow: 0 0 0 1px rgba(62, 226, 168, 0.35), 0 16px 38px -12px var(--emerald-glow);
+  color: #1d1006;
+  box-shadow: 0 0 0 1px rgba(245, 185, 127, 0.35), 0 16px 38px -12px var(--emerald-glow);
 }
 .dark .btn-primary:hover {
-  background: #58f0bb;
-  box-shadow: 0 0 0 1px rgba(62, 226, 168, 0.55), 0 22px 50px -10px var(--emerald-glow);
+  background: #ffd1a1;
+  box-shadow: 0 0 0 1px rgba(245, 185, 127, 0.55), 0 22px 50px -10px var(--emerald-glow);
 }
 
 .btn-ghost {
@@ -352,8 +360,8 @@ html { scroll-behavior: smooth; }
   position: relative;
 }
 .dark .card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)) , var(--bg-elev);
-  box-shadow: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 0 0 1px rgba(255,255,255,0.02) inset;
+  background: linear-gradient(180deg, rgba(245, 185, 127, 0.025), rgba(255,255,255,0)) , var(--bg-elev);
+  box-shadow: 0 1px 0 0 rgba(245, 185, 127, 0.06) inset, 0 0 0 1px rgba(255,255,255,0.02) inset;
 }
 
 /* Glass card — used on the futuristic detail pages */
@@ -365,10 +373,10 @@ html { scroll-behavior: smooth; }
   position: relative;
 }
 .dark .glass-card {
-  background: rgba(15, 20, 24, 0.55);
-  border-color: rgba(255, 255, 255, 0.06);
+  background: rgba(22, 22, 42, 0.55);
+  border-color: rgba(245, 185, 127, 0.10);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 1px 0 rgba(245, 185, 127, 0.06) inset,
     0 24px 80px -24px rgba(0, 0, 0, 0.6);
 }
 
@@ -462,7 +470,7 @@ input[type="range"].slider-fx::-webkit-slider-thumb:hover { transform: scale(1.1
 .dark input[type="range"].slider-fx::-webkit-slider-thumb {
   background: var(--emerald);
   border-color: var(--bg-elev);
-  box-shadow: 0 0 0 1px var(--emerald), 0 0 24px 0 var(--emerald-glow);
+  box-shadow: 0 0 0 1px rgba(245, 185, 127, 0.6), 0 0 24px 0 var(--emerald-glow);
 }
 input[type="range"].slider-fx::-moz-range-thumb {
   width: 18px;
