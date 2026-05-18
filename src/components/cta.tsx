@@ -18,22 +18,60 @@ const INITIAL: FormState = {
   website: "",
 };
 
+type SubmitResult = {
+  ok: boolean;
+  delivered: boolean;
+  detail?: string;
+};
+
 export function AuditCTA() {
   const [data, setData] = useState<FormState>(INITIAL);
   const [submitted, setSubmitted] = useState(false);
+  const [result, setResult] = useState<SubmitResult | null>(null);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   function update<K extends keyof FormState>(k: K, v: FormState[K]) {
     setData((d) => ({ ...d, [k]: v }));
   }
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (pending) return;
+    setPending(true);
+    setError(null);
+
+    // Best-effort local backup so a single Resend hiccup never loses a lead.
     try {
       const prev = JSON.parse(localStorage.getItem("aria-audits") || "[]");
       prev.push({ ...data, ts: new Date().toISOString() });
       localStorage.setItem("aria-audits", JSON.stringify(prev));
     } catch {}
-    setSubmitted(true);
+
+    try {
+      const res = await fetch("/api/audit/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const json = (await res.json()) as SubmitResult & { error?: string; detail?: string };
+      if (!res.ok || json.error) {
+        setError(
+          json.detail ||
+            (res.status === 429
+              ? "Too many submissions from your network — try again in a minute."
+              : "Couldn't deliver that — please call or text +1 (816) 859-9999 instead."),
+        );
+        setPending(false);
+        return;
+      }
+      setResult({ ok: json.ok, delivered: json.delivered, detail: json.detail });
+      setSubmitted(true);
+      setPending(false);
+    } catch {
+      setError("Network error — please call or text +1 (816) 859-9999 instead.");
+      setPending(false);
+    }
   }
 
   return (
@@ -72,6 +110,23 @@ export function AuditCTA() {
               <strong className="text-ink">1 business day</strong>. If you don&apos;t learn
               something actionable, we&apos;ll buy you lunch on us. Yes, really.
             </div>
+
+            <div className="mt-6 grid gap-2 text-sm text-ink-soft">
+              <a href="tel:+18168599999" className="hover:text-emerald">
+                <span className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">
+                  Or call / text
+                </span>
+                <br />
+                <span className="font-serif text-2xl text-ink">+1 (816) 859-9999</span>
+              </a>
+              <a href="mailto:ariapersonalagent@gmail.com" className="text-ink-soft hover:text-emerald">
+                <span className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">
+                  Email
+                </span>
+                <br />
+                ariapersonalagent@gmail.com
+              </a>
+            </div>
           </div>
 
           {!submitted ? (
@@ -88,8 +143,20 @@ export function AuditCTA() {
                   <Field label="Clinic website or Instagram" value={data.website} onChange={(v) => update("website", v)} required />
                 </div>
               </div>
-              <button type="submit" className="btn-primary mt-6 w-full">
-                Send me my audit (it&apos;s free)
+              {error && (
+                <p
+                  role="alert"
+                  className="mt-4 rounded-xl border border-danger/30 bg-danger/5 px-3.5 py-2.5 text-sm text-danger"
+                >
+                  {error}
+                </p>
+              )}
+              <button
+                type="submit"
+                disabled={pending}
+                className="btn-primary mt-6 w-full disabled:cursor-not-allowed disabled:opacity-90"
+              >
+                {pending ? "Sending…" : "Send me my audit (it's free)"}
                 <span aria-hidden>→</span>
               </button>
               <p className="mt-3 text-center text-xs text-ink-faint">
@@ -112,12 +179,18 @@ export function AuditCTA() {
               <h3 className="mt-5 font-serif text-3xl">You&apos;re in.</h3>
               <p className="mt-3 text-ink-soft">
                 We&apos;ll run your audit and deliver the Loom to{" "}
-                <strong className="text-ink">{data.email}</strong> within 1 business day. Keep an
-                eye on your inbox — it&apos;ll come from <em>audits@aria.work</em>.
+                <strong className="text-ink">{data.email}</strong> within 1 business day.{" "}
+                {result?.delivered
+                  ? "Check your inbox for the confirmation."
+                  : "We've got your details on file — Afzal will be in touch personally."}
+              </p>
+              <p className="mt-3 text-sm text-ink-soft">
+                Want to lock a 15-minute slot now? Use the calendar below.
               </p>
               <button
                 onClick={() => {
                   setSubmitted(false);
+                  setResult(null);
                   setData(INITIAL);
                 }}
                 className="btn-ghost mx-auto mt-6 text-sm"

@@ -1,6 +1,8 @@
 import OpenAI from "openai";
 import { ARIA_SYSTEM_PROMPT, ARIA_WRAP_UP_INSTRUCTION } from "@/lib/aria-prompt";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { getDemo } from "@/lib/demo-store";
+import { SHARED_WRAP_UP_INSTRUCTION } from "@/lib/clinic-profile";
 
 export const runtime = "nodejs";
 
@@ -77,9 +79,10 @@ export async function POST(req: Request): Promise<Response> {
     return json<ErrorResponse>({ error: "bad_body" }, 400);
   }
 
-  const { sessionId, messages } = body as {
+  const { sessionId, messages, demoId } = body as {
     sessionId?: unknown;
     messages?: unknown;
+    demoId?: unknown;
   };
 
   if (typeof sessionId !== "string" || !/^[a-zA-Z0-9_-]{8,64}$/.test(sessionId)) {
@@ -88,6 +91,24 @@ export async function POST(req: Request): Promise<Response> {
 
   if (!Array.isArray(messages) || messages.length === 0) {
     return json<ErrorResponse>({ error: "no_messages" }, 400);
+  }
+
+  // Optional: custom per-clinic prompt loaded from the demo cache.
+  let basePrompt = ARIA_SYSTEM_PROMPT;
+  let wrapUpInstruction = ARIA_WRAP_UP_INSTRUCTION;
+  if (typeof demoId === "string" && demoId.length > 0) {
+    if (!/^[a-zA-Z0-9_-]{6,64}$/.test(demoId)) {
+      return json<ErrorResponse>({ error: "bad_demo_id" }, 400);
+    }
+    const rec = getDemo(demoId);
+    if (!rec) {
+      return json<ErrorResponse>({
+        error: "demo_expired",
+        detail: "This custom demo has expired. Generate a fresh one from your URL.",
+      }, 404);
+    }
+    basePrompt = rec.systemPrompt;
+    wrapUpInstruction = SHARED_WRAP_UP_INSTRUCTION;
   }
 
   const sanitized: IncomingMessage[] = [];
@@ -124,9 +145,7 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   const isWrappingUp = userTurnCount >= WRAP_LIMIT;
-  const systemPrompt = isWrappingUp
-    ? ARIA_SYSTEM_PROMPT + ARIA_WRAP_UP_INSTRUCTION
-    : ARIA_SYSTEM_PROMPT;
+  const systemPrompt = isWrappingUp ? basePrompt + wrapUpInstruction : basePrompt;
 
   const trimmedHistory = sanitized.slice(-HISTORY_WINDOW);
 

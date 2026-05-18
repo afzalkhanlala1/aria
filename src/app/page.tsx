@@ -1,18 +1,18 @@
 import Link from "next/link";
 import { Hero } from "@/components/hero";
 import { Story } from "@/components/story";
-import { Features } from "@/components/features";
 import { RouteTeasers } from "@/components/route-teasers";
-import { Proof } from "@/components/proof";
+import { TestimonialsLite } from "@/components/testimonials-lite";
+import { Founder } from "@/components/founder";
 
 export default function Home() {
   return (
     <>
       <Hero />
       <Story />
-      <Features />
+      <TestimonialsLite />
       <RouteTeasers />
-      <Proof />
+      <Founder />
       <HomeCta />
     </>
   );

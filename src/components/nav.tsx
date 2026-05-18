@@ -12,8 +12,12 @@ const LINKS = [
   { href: "/roi", label: "ROI" },
   { href: "/pricing", label: "Pricing" },
   { href: "/customers", label: "Customers" },
+  { href: "/compliance", label: "Security" },
   { href: "/faq", label: "FAQ" },
 ];
+
+const PHONE = "+1 (816) 859-9999";
+const PHONE_HREF = "tel:+18168599999";
 
 export function Nav() {
   const pathname = usePathname();
@@ -47,7 +51,7 @@ export function Nav() {
           <Logo />
         </Link>
 
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-1 lg:flex">
           {LINKS.map((l) => {
             const active = pathname === l.href;
             return (
@@ -75,6 +79,12 @@ export function Nav() {
         </ul>
 
         <div className="flex items-center gap-2">
+          <a
+            href={PHONE_HREF}
+            className="hidden font-mono text-[0.7rem] uppercase tracking-widest text-ink-faint transition-colors hover:text-emerald xl:inline-flex"
+          >
+            <span className="text-emerald">●</span>&nbsp;{PHONE}
+          </a>
           <div className="hidden md:inline-flex">
             <ThemeToggle />
           </div>
@@ -90,7 +100,7 @@ export function Nav() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="grid size-10 place-items-center rounded-full border border-line text-ink md:hidden"
+            className="grid size-10 place-items-center rounded-full border border-line text-ink lg:hidden"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
               {open ? (
@@ -114,7 +124,7 @@ export function Nav() {
       </nav>
 
       {open && (
-        <div className="border-t border-line/60 bg-bg/95 backdrop-blur-xl md:hidden">
+        <div className="border-t border-line/60 bg-bg/95 backdrop-blur-xl lg:hidden">
           <ul className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-4">
             {LINKS.map((l) => {
               const active = pathname === l.href;
@@ -135,12 +145,23 @@ export function Nav() {
                 </li>
               );
             })}
-            <li className="mt-3 flex items-center justify-between gap-3 border-t border-line/60 px-3 pt-4">
-              <ThemeToggle />
-              <Link href="/audit" className="btn-primary text-sm">
-                Free revenue audit
-                <span aria-hidden>→</span>
-              </Link>
+            <li className="mt-3 flex flex-col gap-3 border-t border-line/60 px-3 pt-4">
+              <a
+                href={PHONE_HREF}
+                className="flex items-center justify-between rounded-xl px-1 text-sm text-ink-soft"
+              >
+                <span>
+                  <span className="text-emerald">●</span>&nbsp;Call or text
+                </span>
+                <span className="font-serif text-base text-ink">{PHONE}</span>
+              </a>
+              <div className="flex items-center justify-between gap-3">
+                <ThemeToggle />
+                <Link href="/audit" className="btn-primary text-sm">
+                  Free revenue audit
+                  <span aria-hidden>→</span>
+                </Link>
+              </div>
             </li>
           </ul>
         </div>

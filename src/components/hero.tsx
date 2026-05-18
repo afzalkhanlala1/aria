@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DashboardPreview } from "./dashboard";
+import { UrlDemo } from "./url-demo";
 
 export function Hero() {
   return (
@@ -34,13 +35,22 @@ export function Hero() {
               confirmation while they&apos;re still on the line. Done-for-you. No new hires.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link href="/audit" className="btn-primary">
-                Get my free revenue audit
+            <div className="mt-8">
+              <div className="font-mono text-[0.65rem] uppercase tracking-widest text-emerald">
+                ↳ Try Aria trained on YOUR site
+              </div>
+              <div className="mt-2.5">
+                <UrlDemo />
+              </div>
+            </div>
+
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Link href="/audit" className="btn-ghost">
+                Or get a free revenue audit
                 <span aria-hidden>→</span>
               </Link>
-              <Link href="/demo" className="btn-ghost">
-                <PlayIcon /> Try the live demo
+              <Link href="/demo" className="text-sm text-ink-soft underline decoration-line underline-offset-4 hover:text-ink hover:decoration-emerald">
+                <PlayIcon /> Watch the sandbox demo
               </Link>
             </div>
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import { AuditCTA } from "@/components/cta";
+import { CalEmbed } from "@/components/cal-embed";
 
 export const metadata: Metadata = {
   title: "Free Revenue Audit — Aria",
@@ -95,6 +96,36 @@ export default function AuditPage() {
       </section>
 
       <AuditCTA />
+
+      <section className="mx-auto max-w-7xl px-5 py-20 lg:px-10 lg:py-24">
+        <div className="grid items-end gap-6 lg:grid-cols-[1fr_auto]">
+          <div className="max-w-3xl">
+            <span className="eyebrow">Or skip the form</span>
+            <h2 className="mt-4 font-serif text-3xl leading-tight sm:text-4xl">
+              Grab 15 minutes on{" "}
+              <em className="italic text-emerald">Afzal&apos;s calendar.</em>
+            </h2>
+            <p className="mt-4 text-ink-soft">
+              No demo decks, no SDR call. Just a quick scoping conversation to see if Aria is
+              the right fit for your clinic. Founder runs the call.
+            </p>
+          </div>
+          <div className="flex flex-col gap-1 text-sm text-ink-soft sm:items-end">
+            <a href="tel:+18168599999" className="font-serif text-2xl text-ink hover:text-emerald">
+              +1 (816) 859-9999
+            </a>
+            <a
+              href="mailto:ariapersonalagent@gmail.com"
+              className="hover:text-emerald"
+            >
+              ariapersonalagent@gmail.com
+            </a>
+          </div>
+        </div>
+        <div className="mt-10">
+          <CalEmbed />
+        </div>
+      </section>
 
       <section className="mx-auto max-w-7xl px-5 py-16 text-center lg:px-10 lg:py-20">
         <p className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">

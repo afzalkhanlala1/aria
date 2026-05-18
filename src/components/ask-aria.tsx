@@ -6,13 +6,13 @@ type Msg = { who: "you" | "aria" | "system"; text: string; tag?: string };
 
 type ChatStatus = "active" | "wrapping" | "ended";
 
-const GREETING: Msg = {
+const DEFAULT_GREETING: Msg = {
   who: "aria",
   text:
     "Hi! I'm Aria — Luxe Aesthetics' AI front desk. Ask me anything a real patient would: pricing, booking, after-hours, even a tough question. I'll respond exactly the way I would on a live call.",
 };
 
-const QUICK = [
+const DEFAULT_QUICK = [
   "How much is Botox?",
   "Do you have anything tonight?",
   "Is this AI? I want a human.",
@@ -26,6 +26,25 @@ const SOFT_LIMIT = 20;
 const HARD_LIMIT = 30;
 const SESSION_STORAGE_KEY = "aria-sandbox-session";
 
+export type AskAriaProps = {
+  /** Optional demo id from /api/aria/build-demo — chats use the custom prompt. */
+  demoId?: string;
+  /** Brand name shown in the chat header and the greeting. */
+  brandName?: string;
+  /** Optional override of the greeting text. */
+  greeting?: string;
+  /** Optional override of the quick-prompt pills. */
+  quickPrompts?: string[];
+  /** Optional override of the eyebrow + heading + intro on the left side. */
+  intro?: {
+    eyebrow?: string;
+    heading?: React.ReactNode;
+    body?: React.ReactNode;
+  };
+  /** Hide the left-side intro column entirely (so the chat fills the area). */
+  hideIntro?: boolean;
+};
+
 function generateSessionId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
     return crypto.randomUUID().replace(/-/g, "");
@@ -33,8 +52,28 @@ function generateSessionId(): string {
   return Math.random().toString(36).slice(2) + Date.now().toString(36);
 }
 
-export function AskAria() {
-  const [messages, setMessages] = useState<Msg[]>([GREETING]);
+export function AskAria({
+  demoId,
+  brandName = "Luxe Aesthetics",
+  greeting,
+  quickPrompts,
+  intro,
+  hideIntro,
+}: AskAriaProps = {}) {
+  const initialGreeting: Msg = useMemo(
+    () => ({
+      who: "aria",
+      text:
+        greeting ??
+        (demoId
+          ? `Hi! I'm Aria — ${brandName}'s AI front desk for this demo. I learned about your services from your website. Ask me anything a real patient would.`
+          : DEFAULT_GREETING.text),
+    }),
+    [greeting, demoId, brandName],
+  );
+
+  const QUICK = quickPrompts ?? DEFAULT_QUICK;
+  const [messages, setMessages] = useState<Msg[]>([initialGreeting]);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [status, setStatus] = useState<ChatStatus>("active");
@@ -65,13 +104,13 @@ export function AskAria() {
     if (typeof window !== "undefined") {
       window.sessionStorage.setItem(SESSION_STORAGE_KEY, id);
     }
-    setMessages([GREETING]);
+    setMessages([initialGreeting]);
     setStatus("active");
     setTurn(0);
     setError(null);
     setTyping(false);
     setInput("");
-  }, []);
+  }, [initialGreeting]);
 
   const send = useCallback(
     async (text: string) => {
@@ -105,6 +144,7 @@ export function AskAria() {
           body: JSON.stringify({
             sessionId: sessionRef.current,
             messages: apiMessages,
+            ...(demoId ? { demoId } : {}),
           }),
         });
 
@@ -153,7 +193,7 @@ export function AskAria() {
         setTyping(false);
       }
     },
-    [messages, status, typing],
+    [messages, status, typing, demoId],
   );
 
   const turnsRemaining = Math.max(0, HARD_LIMIT - turn);
@@ -166,43 +206,61 @@ export function AskAria() {
   }, [status, turn]);
 
   return (
-    <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-12">
-      <div>
-        <span className="eyebrow">Ask Aria — try her live</span>
-        <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
-          Stop watching scripts.{" "}
-          <em className="italic text-emerald">Talk to her.</em>
-        </h2>
-        <p className="mt-5 text-lg text-ink-soft">
-          This is a sandbox of the same logic running for clinics — trained on a sample Luxe
-          Aesthetics knowledge base. Ask anything a real patient would. Stress-test her.
-        </p>
-
-        <div className="mt-6">
-          <div className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">
-            Quick prompts
+    <div
+      className={
+        hideIntro
+          ? "mx-auto max-w-2xl"
+          : "grid items-start gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-12"
+      }
+    >
+      {!hideIntro && (
+        <div>
+          <span className="eyebrow">
+            {intro?.eyebrow ?? (demoId ? `Aria for ${brandName}` : "Ask Aria — try her live")}
+          </span>
+          <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
+            {intro?.heading ?? (
+              <>
+                Stop watching scripts.{" "}
+                <em className="italic text-emerald">Talk to her.</em>
+              </>
+            )}
+          </h2>
+          <div className="mt-5 text-lg text-ink-soft">
+            {intro?.body ?? (
+              <p>
+                This is a sandbox of the same logic running for clinics — trained on a sample
+                Luxe Aesthetics knowledge base. Ask anything a real patient would. Stress-test her.
+              </p>
+            )}
           </div>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {QUICK.map((q) => (
-              <li key={q}>
-                <button
-                  onClick={() => send(q)}
-                  disabled={inputDisabled}
-                  className="rounded-full border border-line bg-bg-elev/60 px-3 py-1.5 text-xs text-ink-soft transition-colors hover:border-emerald hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {q}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
 
-        <div className="mt-6 rounded-2xl border border-dashed border-line bg-bg-soft/40 p-4 text-xs text-ink-soft">
-          <strong className="text-ink">Note:</strong> this is a public sandbox with no scheduler
-          attached — and conversations are capped at {HARD_LIMIT} turns to keep the demo affordable.
-          In your deployment Aria reads live availability and books in-call.
+          <div className="mt-6">
+            <div className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">
+              Quick prompts
+            </div>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {QUICK.map((q) => (
+                <li key={q}>
+                  <button
+                    onClick={() => send(q)}
+                    disabled={inputDisabled}
+                    className="rounded-full border border-line bg-bg-elev/60 px-3 py-1.5 text-xs text-ink-soft transition-colors hover:border-emerald hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {q}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-dashed border-line bg-bg-soft/40 p-4 text-xs text-ink-soft">
+            <strong className="text-ink">Note:</strong> this is a public sandbox with no scheduler
+            attached — and conversations are capped at {HARD_LIMIT} turns to keep the demo affordable.
+            In your deployment Aria reads live availability and books in-call.
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="card overflow-hidden rounded-[2rem] shadow-[0_30px_80px_-30px_rgba(13,15,14,0.35)]">
         <div className="flex items-center justify-between border-b border-line bg-bg-soft/60 px-5 py-3">
@@ -211,9 +269,9 @@ export function AskAria() {
               A
             </div>
             <div>
-              <div className="text-sm font-medium">Aria · Luxe Aesthetics</div>
+              <div className="text-sm font-medium">Aria · {brandName}</div>
               <div className="font-mono text-[0.65rem] uppercase tracking-widest text-emerald">
-                Sandbox · live · gpt
+                {demoId ? "Custom demo · live · gpt" : "Sandbox · live · gpt"}
               </div>
             </div>
           </div>
