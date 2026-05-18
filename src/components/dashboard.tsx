@@ -28,10 +28,7 @@ export function DashboardPreview() {
         <span className="font-mono text-[0.7rem] uppercase tracking-widest text-ink-faint">
           aria · luxe aesthetics, austin
         </span>
-        <div className="flex items-center gap-1.5 rounded-full bg-emerald-soft px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-widest text-emerald-deep">
-          <span className="pulse-ring size-1.5 rounded-full bg-emerald" />
-          Live
-        </div>
+        <span className="tag-live">Live</span>
       </div>
 
       {/* Body */}
@@ -101,14 +98,16 @@ function DashCard({
   return (
     <div
       className={[
-        "rounded-2xl border border-line p-4 transition-colors",
-        accent ? "bg-emerald-deep text-bg" : "bg-white",
+        "rounded-2xl border p-4 transition-colors",
+        accent
+          ? "border-accent-line bg-accent-bg text-accent-fg"
+          : "border-line bg-bg-elev",
         wide ? "col-span-2" : "",
       ].join(" ")}
     >
       <div
         className={`font-mono text-[0.65rem] uppercase tracking-widest ${
-          accent ? "text-bg/60" : "text-ink-faint"
+          accent ? "text-accent-fg/60" : "text-ink-faint"
         }`}
       >
         {label}
@@ -116,7 +115,7 @@ function DashCard({
       <div className="mt-2 flex items-baseline gap-2">
         <span className="font-serif text-3xl leading-none">{value}</span>
         <span
-          className={`text-xs ${accent ? "text-emerald-soft" : "text-ink-faint"}`}
+          className={`text-xs ${accent ? "text-accent-fg/70" : "text-ink-faint"}`}
         >
           {delta}
         </span>
@@ -137,13 +136,13 @@ function TickerRow({
   tag: "BOOKED" | "ANSWERED" | "TRANSFER" | "REVENUE";
 }) {
   const tagColor: Record<typeof tag, string> = {
-    BOOKED: "bg-emerald-soft text-emerald-deep",
-    ANSWERED: "bg-bg text-ink-soft border border-line",
+    BOOKED: "bg-emerald-soft text-emerald",
+    ANSWERED: "bg-bg-soft text-ink-soft border border-line",
     TRANSFER: "bg-rose/15 text-ink-soft border border-rose/30",
-    REVENUE: "bg-gold/20 text-emerald-deep",
+    REVENUE: "bg-gold/20 text-emerald",
   };
   return (
-    <li className="flex items-center gap-3 rounded-xl px-2 py-1.5 hover:bg-bg/60">
+    <li className="flex items-center gap-3 rounded-xl px-2 py-1.5 hover:bg-bg-soft/60">
       <span className="w-10 font-mono text-[0.7rem] text-ink-faint">{time}</span>
       <span className="w-36 truncate text-sm text-ink-soft">{who}</span>
       <span className="flex-1 truncate text-sm text-ink">{what}</span>

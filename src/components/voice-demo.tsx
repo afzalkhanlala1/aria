@@ -125,7 +125,7 @@ export function VoiceDemo() {
 
         <div className="flex items-center gap-4 border-b border-line px-5 py-5">
           <div className="relative">
-            <div className="grid size-14 place-items-center rounded-full bg-emerald-deep text-bg shadow-inner">
+            <div className="grid size-14 place-items-center rounded-full bg-accent-bg text-accent-fg shadow-inner">
               <PhoneIcon />
             </div>
             {playing && (
@@ -135,7 +135,7 @@ export function VoiceDemo() {
           <div className="flex-1">
             <div className="font-serif text-xl">Aria · Luxe Aesthetics</div>
             <div className="text-sm text-ink-faint">
-              Voice: <span className="text-ink-soft">"Rachel" — warm female, US</span>
+              Voice: <span className="text-ink-soft">&quot;Rachel&quot; — warm female, US</span>
             </div>
           </div>
           <Waveform active={playing} />
@@ -167,11 +167,11 @@ export function VoiceDemo() {
           )}
 
           {booked && (
-            <div className="rise mt-3 rounded-2xl border border-emerald-soft bg-emerald-soft/60 px-4 py-3">
-              <div className="flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-emerald-deep">
+            <div className="rise mt-3 rounded-2xl border border-emerald/30 bg-emerald-soft/60 px-4 py-3">
+              <div className="flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-emerald">
                 <CheckIcon /> Confirmation sent
               </div>
-              <div className="mt-2 text-sm text-emerald-deep">
+              <div className="mt-2 text-sm text-ink">
                 <strong>SMS to caller:</strong> Hi Sarah! Confirmed: <em>Thu, Mar 14 · 3:30 PM</em> with Dr. Patel at Luxe Aesthetics. Pre-care:{" "}
                 <a className="underline">luxeaesth.co/prep</a> · Reply C to cancel.
               </div>
@@ -213,8 +213,8 @@ export function VoiceDemo() {
                 className={[
                   "w-full text-left rounded-2xl border px-4 py-3 transition-all",
                   scenarioId === s.id
-                    ? "border-ink bg-white shadow-sm"
-                    : "border-line bg-white/60 hover:border-ink-faint hover:bg-white",
+                    ? "border-emerald bg-bg-elev shadow-sm"
+                    : "border-line bg-bg-elev/60 hover:border-ink-faint hover:bg-bg-elev",
                 ].join(" ")}
               >
                 <div className="flex items-center justify-between gap-3">
@@ -242,7 +242,7 @@ function TranscriptBubble({ turn }: { turn: Turn }) {
       <div className="max-w-[85%]">
         <div
           className={`mb-1 font-mono text-[0.65rem] uppercase tracking-widest ${
-            isAria ? "text-emerald-deep" : "text-ink-faint"
+            isAria ? "text-emerald" : "text-ink-faint"
           }`}
         >
           {isAria ? "Aria" : "Caller"}
@@ -251,8 +251,8 @@ function TranscriptBubble({ turn }: { turn: Turn }) {
           className={[
             "rounded-2xl px-4 py-2.5 text-[0.95rem] leading-relaxed",
             isAria
-              ? "bg-emerald-deep text-bg"
-              : "bg-white text-ink border border-line",
+              ? "bg-accent-bg text-accent-fg"
+              : "bg-bg-elev text-ink border border-line",
           ].join(" ")}
         >
           {turn.text}
@@ -275,7 +275,7 @@ function TypingBubble({
       <div
         className={[
           "rounded-2xl px-4 py-3",
-          isAria ? "bg-emerald-deep/90 text-bg" : "bg-white text-ink border border-line",
+          isAria ? "bg-accent-bg/90 text-accent-fg" : "bg-bg-elev text-ink border border-line",
           subtle ? "opacity-60" : "",
         ].join(" ")}
       >
@@ -296,7 +296,7 @@ function Waveform({ active }: { active: boolean }) {
       {bars.map((_, i) => (
         <span
           key={i}
-          className={`wave-bar inline-block w-0.5 rounded-full bg-emerald-deep`}
+          className={`wave-bar inline-block w-0.5 rounded-full bg-emerald`}
           style={{
             height: `${10 + (i % 5) * 4}px`,
             animationDelay: `${(i % 9) * 0.07}s`,

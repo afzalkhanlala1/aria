@@ -45,14 +45,14 @@ export function Timeline() {
           {STEPS.map((s, i) => (
             <li key={s.title} className="relative">
               <div className="mb-5 flex items-center gap-3">
-                <span className="grid size-10 place-items-center rounded-full bg-ink font-serif text-bg">
+                <span className="grid size-10 place-items-center rounded-full bg-accent-bg font-serif text-accent-fg">
                   {i + 1}
                 </span>
                 {i < STEPS.length - 1 && (
                   <span className="hidden h-px flex-1 bg-line lg:block" />
                 )}
               </div>
-              <div className="font-mono text-[0.65rem] uppercase tracking-widest text-emerald-deep">
+              <div className="font-mono text-[0.65rem] uppercase tracking-widest text-emerald">
                 {s.range}
               </div>
               <h3 className="mt-1 font-serif text-2xl">{s.title}</h3>
