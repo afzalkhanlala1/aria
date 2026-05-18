@@ -59,7 +59,7 @@ export function FAQ() {
                 <span className="font-serif text-xl leading-snug">{item.q}</span>
                 <span
                   className={`mt-1 grid size-8 shrink-0 place-items-center rounded-full border border-line transition-transform ${
-                    isOpen ? "rotate-45 bg-ink text-bg" : ""
+                    isOpen ? "rotate-45 bg-emerald text-[#06120e] border-emerald" : ""
                   }`}
                   aria-hidden
                 >

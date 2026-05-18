@@ -121,14 +121,14 @@ export function Features() {
         {FEATURES.map((f, i) => (
           <li
             key={f.title}
-            className="card group relative overflow-hidden rounded-3xl p-6 transition-all hover:border-ink-soft"
+            className="card group relative overflow-hidden rounded-3xl p-6 transition-all hover:border-emerald"
           >
-            <div className="absolute -right-4 -top-4 size-24 rounded-full bg-emerald-soft/40 opacity-0 transition-opacity group-hover:opacity-100" />
+            <div className="pointer-events-none absolute -right-4 -top-4 size-24 rounded-full bg-emerald/8 opacity-0 transition-opacity group-hover:opacity-100" />
             <div className="relative">
-              <div className="mb-5 flex size-11 items-center justify-center rounded-xl bg-emerald-deep text-bg">
+              <div className="mb-5 grid size-11 place-items-center rounded-xl bg-accent-bg text-accent-fg">
                 {f.icon}
               </div>
-              <div className="font-mono text-[0.65rem] uppercase tracking-widest text-emerald-deep">
+              <div className="font-mono text-[0.65rem] uppercase tracking-widest text-emerald">
                 0{i + 1} · {f.sub}
               </div>
               <h3 className="mt-1 font-serif text-2xl">{f.title}</h3>

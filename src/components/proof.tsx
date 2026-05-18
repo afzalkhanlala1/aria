@@ -24,17 +24,21 @@ const STORIES = [
 
 export function Proof() {
   return (
-    <section className="bg-emerald-deep text-bg">
-      <div className="mx-auto max-w-7xl px-5 py-24 lg:px-10 lg:py-32">
+    <section className="relative overflow-hidden bg-accent-bg text-accent-fg">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 left-1/2 size-[36rem] -translate-x-1/2 rounded-full bg-emerald/15 blur-3xl"
+      />
+      <div className="relative mx-auto max-w-7xl px-5 py-24 lg:px-10 lg:py-32">
         <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
           <div>
-            <span className="eyebrow text-emerald-soft/70">Operator stories</span>
+            <span className="eyebrow text-accent-fg/70">Operator stories</span>
             <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
               The numbers that{" "}
-              <em className="italic">made owners renew.</em>
+              <em className="italic text-accent-emerald">made owners renew.</em>
             </h2>
           </div>
-          <p className="max-w-md text-emerald-soft/80">
+          <p className="max-w-md text-accent-fg/75">
             Aggregate results from operator pilots and reference deployments. Your audit will use
             your real numbers — no fluff.
           </p>
@@ -44,18 +48,18 @@ export function Proof() {
           {STORIES.map((s) => (
             <li
               key={s.metric}
-              className="rounded-3xl border border-emerald-soft/20 bg-white/[0.04] p-6 backdrop-blur-sm lg:p-7"
+              className="rounded-3xl border border-accent-line bg-white/[0.04] p-6 backdrop-blur-sm lg:p-7"
             >
-              <div className="font-serif text-5xl text-bg">{s.metric}</div>
-              <div className="font-mono text-[0.7rem] uppercase tracking-widest text-emerald-soft/70">
+              <div className="font-serif text-5xl text-accent-emerald">{s.metric}</div>
+              <div className="font-mono text-[0.7rem] uppercase tracking-widest text-accent-fg/70">
                 {s.metricLabel}
               </div>
               <blockquote className="mt-6 text-lg leading-relaxed">
-                <span className="font-serif text-2xl text-emerald-soft/80">“</span>
+                <span className="font-serif text-2xl text-accent-fg/70">“</span>
                 {s.quote}
-                <span className="font-serif text-2xl text-emerald-soft/80">”</span>
+                <span className="font-serif text-2xl text-accent-fg/70">”</span>
               </blockquote>
-              <div className="mt-4 text-sm text-emerald-soft/70">{s.who}</div>
+              <div className="mt-4 text-sm text-accent-fg/70">{s.who}</div>
             </li>
           ))}
         </ul>

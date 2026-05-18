@@ -34,7 +34,7 @@ export function Pricing() {
         </div>
 
         <div className="card relative overflow-hidden rounded-3xl">
-          <div className="absolute right-0 top-0 rounded-bl-2xl bg-emerald-deep px-3 py-1 font-mono text-[0.65rem] uppercase tracking-widest text-bg">
+          <div className="absolute right-0 top-0 rounded-bl-2xl bg-accent-bg px-3 py-1 font-mono text-[0.65rem] uppercase tracking-widest text-accent-fg">
             Managed front desk
           </div>
           <div className="p-7 lg:p-9">
@@ -47,7 +47,7 @@ export function Pricing() {
             <ul className="mt-7 space-y-3">
               {INCLUDES.map((line) => (
                 <li key={line} className="flex items-start gap-3 text-ink-soft">
-                  <span className="mt-1 grid size-4 place-items-center rounded-full bg-emerald-soft text-emerald-deep">
+                  <span className="mt-1 grid size-4 place-items-center rounded-full bg-emerald-soft text-emerald">
                     <svg width="10" height="10" viewBox="0 0 16 16" fill="none">
                       <path d="M3 8.5l3.2 3L13 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
@@ -57,7 +57,7 @@ export function Pricing() {
               ))}
             </ul>
 
-            <a href="#audit" className="btn-primary mt-8 w-full">
+            <a href="/audit" className="btn-primary mt-8 w-full">
               Get my free revenue audit first
               <span aria-hidden>→</span>
             </a>
@@ -86,7 +86,7 @@ function Tile({
     <div
       className={[
         "rounded-2xl border p-4",
-        accent ? "border-ink bg-white" : "border-line bg-white/60",
+        accent ? "border-emerald bg-bg-elev" : "border-line bg-bg-elev/60",
       ].join(" ")}
     >
       <div className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">

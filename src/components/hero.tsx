@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { DashboardPreview } from "./dashboard";
 
 export function Hero() {
@@ -6,36 +7,41 @@ export function Hero() {
       <div className="mesh absolute inset-0 -z-10" />
       <div className="grain absolute inset-0 -z-10" />
 
-      <div className="mx-auto max-w-7xl px-5 pb-20 pt-16 lg:px-10 lg:pb-28 lg:pt-24">
+      <div className="mx-auto max-w-7xl px-5 pb-16 pt-14 lg:px-10 lg:pb-24 lg:pt-20">
         <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
-          <div>
+          <div className="min-w-0">
             <span className="chip">
               <span className="size-1.5 rounded-full bg-emerald" />
               Now booking Q3 clinics — Texas, FL, AZ
             </span>
 
-            <h1 className="mt-7 font-serif text-[2.6rem] leading-[1.05] tracking-tight sm:text-[3.4rem] lg:text-[4.2rem]">
-              The AI front desk
-              <br />
-              that turns missed calls
-              <br />
-              into <em className="italic text-emerald">booked appointments.</em>
+            <h1 className="mt-7 font-serif text-[2rem] leading-[1.06] tracking-tight sm:text-[3rem] lg:text-[4.2rem]">
+              The AI front desk{" "}
+              <span className="hidden lg:inline">
+                <br />
+              </span>
+              that turns missed calls{" "}
+              <span className="hidden sm:inline">
+                <br />
+              </span>
+              into{" "}
+              <em className="italic text-emerald">booked appointments.</em>
             </h1>
 
             <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-ink-soft">
-              Aria answers every call, DM and after‑hours lead for your clinic in your brand voice —
+              Aria answers every call, DM and after-hours lead for your clinic in your brand voice —
               qualifies them, books them into Boulevard, Aesthetic Record or Mangomint, and texts a
-              confirmation while they&apos;re still on the line. Done‑for‑you. No new hires.
+              confirmation while they&apos;re still on the line. Done-for-you. No new hires.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a href="#audit" className="btn-primary">
+              <Link href="/audit" className="btn-primary">
                 Get my free revenue audit
                 <span aria-hidden>→</span>
-              </a>
-              <a href="#demo" className="btn-ghost">
-                <PlayIcon /> Hear a live call
-              </a>
+              </Link>
+              <Link href="/demo" className="btn-ghost">
+                <PlayIcon /> Try the live demo
+              </Link>
             </div>
 
             <ul className="mt-10 grid grid-cols-3 gap-6 border-t border-line pt-6 text-sm">
@@ -45,7 +51,7 @@ export function Hero() {
             </ul>
           </div>
 
-          <div className="relative">
+          <div className="relative min-w-0">
             <div className="pointer-events-none absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-emerald/10 via-transparent to-rose/10 blur-2xl" />
             <DashboardPreview />
           </div>
@@ -98,6 +104,14 @@ function TrustStrip() {
             Integrates with
           </span>
           <div className="relative flex-1 overflow-hidden">
+            <div
+              className="pointer-events-none absolute inset-y-0 left-0 w-12 z-10 bg-gradient-to-r from-bg-soft to-transparent"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute inset-y-0 right-0 w-12 z-10 bg-gradient-to-l from-bg-soft to-transparent"
+              aria-hidden
+            />
             <div className="marquee-track flex w-max items-center gap-10 whitespace-nowrap">
               {[...integrations, ...integrations].map((name, i) => (
                 <span

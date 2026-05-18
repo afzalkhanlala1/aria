@@ -113,7 +113,7 @@ export function RoiCalculator() {
         </div>
       </div>
 
-      <div className="relative overflow-hidden rounded-3xl bg-emerald-deep p-6 text-bg lg:p-8">
+      <div className="relative overflow-hidden rounded-3xl border border-accent-line bg-accent-bg p-6 text-accent-fg lg:p-8">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-12 -top-12 size-64 rounded-full bg-emerald/30 blur-3xl"
@@ -123,48 +123,48 @@ export function RoiCalculator() {
           className="pointer-events-none absolute -bottom-10 -left-10 size-52 rounded-full bg-rose/20 blur-3xl"
         />
 
-        <span className="eyebrow text-emerald-soft/80">Today, without Aria</span>
+        <span className="eyebrow text-accent-fg/70">Today, without Aria</span>
         <div className="mt-3 flex items-end gap-3">
           <span className="font-serif text-5xl leading-none">
             {fmtCurrency(monthly.lostRevenue)}
           </span>
-          <span className="pb-2 text-sm text-emerald-soft">/ month leaking</span>
+          <span className="pb-2 text-sm text-accent-fg/70">/ month leaking</span>
         </div>
-        <p className="mt-1 text-sm text-emerald-soft/80">
-          {Math.round(monthly.missed)} missed calls × {bookingRate}% would‑book × {fmtCurrency(avgValue)}
+        <p className="mt-1 text-sm text-accent-fg/70">
+          {Math.round(monthly.missed)} missed calls × {bookingRate}% would-book × {fmtCurrency(avgValue)}
         </p>
 
-        <div className="my-7 h-px bg-emerald-soft/20" />
+        <div className="my-7 h-px bg-accent-line" />
 
-        <span className="eyebrow text-emerald-soft/80">With Aria managed front desk</span>
+        <span className="eyebrow text-accent-fg/70">With Aria managed front desk</span>
         <div className="mt-3 grid grid-cols-2 gap-4">
           <ResultStat
             label="Recovered missed calls"
             value={fmtCurrency(monthly.ariaRevenue)}
           />
           <ResultStat
-            label="Recovered no‑shows"
+            label="Recovered no-shows"
             value={fmtCurrency(monthly.noShowRecovery)}
           />
         </div>
 
-        <div className="mt-6 rounded-2xl border border-emerald-soft/30 bg-white/5 p-5 backdrop-blur-sm">
+        <div className="mt-6 rounded-2xl border border-accent-line bg-white/5 p-5 backdrop-blur-sm">
           <div className="flex items-baseline justify-between">
-            <span className="text-sm uppercase tracking-widest text-emerald-soft/80">
+            <span className="text-xs uppercase tracking-widest text-accent-fg/70">
               Total recovered
             </span>
             <span className="font-serif text-3xl">
               {fmtCurrency(monthly.totalRecovered)}
-              <span className="ml-1 text-sm text-emerald-soft">/mo</span>
+              <span className="ml-1 text-sm text-accent-fg/70">/mo</span>
             </span>
           </div>
           <div className="mt-3 flex items-baseline justify-between text-sm">
-            <span className="text-emerald-soft/80">Aria managed service</span>
+            <span className="text-accent-fg/70">Aria managed service</span>
             <span>−{fmtCurrency(monthly.ariaCost)}</span>
           </div>
-          <div className="mt-1 flex items-baseline justify-between border-t border-emerald-soft/20 pt-3">
-            <span className="text-emerald-soft">Net monthly impact</span>
-            <span className="font-serif text-2xl text-bg">
+          <div className="mt-1 flex items-baseline justify-between border-t border-accent-line pt-3">
+            <span className="text-accent-fg/85">Net monthly impact</span>
+            <span className="font-serif text-2xl text-accent-emerald">
               {fmtCurrency(monthly.net)}
             </span>
           </div>
@@ -179,10 +179,10 @@ export function RoiCalculator() {
         </div>
 
         <a
-          href="#audit"
-          className="mt-7 inline-flex items-center justify-center gap-2 rounded-full bg-bg px-5 py-3 text-sm font-medium text-ink hover:bg-emerald-soft"
+          href="/audit"
+          className="mt-7 inline-flex items-center justify-center gap-2 rounded-full bg-accent-emerald px-5 py-3 text-sm font-medium text-[#06120e] transition-transform hover:translate-y-[-1px]"
         >
-          Get a free, clinic‑specific audit
+          Get a free, clinic-specific audit
           <span aria-hidden>→</span>
         </a>
       </div>
@@ -228,7 +228,7 @@ function Slider({
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="mt-2 w-full accent-emerald"
+        className="slider-fx mt-3"
       />
     </div>
   );
@@ -236,8 +236,8 @@ function Slider({
 
 function ResultStat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-emerald-soft/20 bg-white/5 p-4 backdrop-blur-sm">
-      <div className="font-mono text-[0.65rem] uppercase tracking-widest text-emerald-soft/80">
+    <div className="rounded-xl border border-accent-line bg-white/5 p-4 backdrop-blur-sm">
+      <div className="font-mono text-[0.65rem] uppercase tracking-widest text-accent-fg/70">
         {label}
       </div>
       <div className="mt-1.5 font-serif text-2xl">{value}</div>
@@ -247,8 +247,8 @@ function ResultStat({ label, value }: { label: string; value: string }) {
 
 function Badge({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between rounded-full border border-emerald-soft/20 bg-white/5 px-4 py-2 text-sm backdrop-blur-sm">
-      <span className="text-emerald-soft/80 uppercase tracking-widest text-[0.7rem]">
+    <div className="flex items-center justify-between rounded-full border border-accent-line bg-white/5 px-4 py-2 text-sm backdrop-blur-sm">
+      <span className="text-accent-fg/70 uppercase tracking-widest text-[0.7rem]">
         {label}
       </span>
       <span className="font-serif text-lg">{value}</span>

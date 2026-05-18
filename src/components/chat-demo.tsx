@@ -95,9 +95,9 @@ export function ChatDemo() {
       {/* Phone-mockup chat */}
       <div className="mx-auto w-full max-w-md">
         <div className="card overflow-hidden rounded-[2rem] shadow-[0_30px_80px_-30px_rgba(13,15,14,0.3)]">
-          <div className="flex items-center justify-between border-b border-line bg-gradient-to-r from-rose/15 via-bg to-emerald-soft/40 px-4 py-3">
+          <div className="flex items-center justify-between border-b border-line bg-gradient-to-r from-rose/15 via-bg-soft to-emerald-soft/40 px-4 py-3">
             <div className="flex items-center gap-3">
-              <div className="grid size-9 place-items-center rounded-full bg-emerald-deep font-serif text-bg">
+              <div className="grid size-9 place-items-center rounded-full bg-accent-bg font-serif text-accent-fg">
                 L
               </div>
               <div>
@@ -123,7 +123,7 @@ export function ChatDemo() {
             <input
               disabled
               placeholder="Message…"
-              className="flex-1 rounded-full border border-line bg-white/70 px-4 py-2 text-sm text-ink-faint placeholder:text-ink-faint"
+              className="flex-1 rounded-full border border-line bg-bg-elev/70 px-4 py-2 text-sm text-ink-faint placeholder:text-ink-faint"
             />
             <button
               className="grid size-9 place-items-center rounded-full bg-ink text-bg"
@@ -155,14 +155,14 @@ function Bubble({ msg }: { msg: Msg }) {
         className={[
           "max-w-[82%] rounded-2xl px-3.5 py-2.5 text-[0.92rem] leading-relaxed",
           isAria
-            ? "bg-bg text-ink border border-line"
-            : "bg-emerald-deep text-bg",
+            ? "bg-bg-soft text-ink border border-line"
+            : "bg-accent-bg text-accent-fg",
         ].join(" ")}
       >
         {msg.text}
       </div>
       {msg.tag && (
-        <span className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-emerald-soft px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-widest text-emerald-deep">
+        <span className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-emerald-soft px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-widest text-emerald">
           <span className="size-1 rounded-full bg-emerald" /> {msg.tag}
         </span>
       )}
@@ -173,7 +173,7 @@ function Bubble({ msg }: { msg: Msg }) {
 function TypingBubble() {
   return (
     <div className="flex">
-      <div className="rounded-2xl border border-line bg-bg px-3.5 py-3">
+      <div className="rounded-2xl border border-line bg-bg-soft px-3.5 py-3">
         <div className="flex items-center gap-1.5">
           <span className="typing-dot size-1.5 rounded-full bg-ink-soft" style={{ animationDelay: "0s" }} />
           <span className="typing-dot size-1.5 rounded-full bg-ink-soft" style={{ animationDelay: "0.2s" }} />

@@ -67,7 +67,7 @@ export function AuditCTA() {
               ))}
             </ul>
 
-            <div className="mt-8 rounded-2xl border border-dashed border-line bg-white/60 p-5 text-sm text-ink-soft">
+            <div className="mt-8 rounded-2xl border border-dashed border-line bg-bg-elev/60 p-5 text-sm text-ink-soft">
               <strong className="text-ink">Turnaround:</strong> we deliver every audit within{" "}
               <strong className="text-ink">1 business day</strong>. If you don&apos;t learn
               something actionable, we&apos;ll buy you lunch on us. Yes, really.
@@ -98,7 +98,7 @@ export function AuditCTA() {
             </form>
           ) : (
             <div className="card flex flex-col justify-center rounded-3xl p-10 text-center">
-              <div className="mx-auto grid size-14 place-items-center rounded-full bg-emerald-soft text-emerald-deep">
+              <div className="mx-auto grid size-14 place-items-center rounded-full bg-emerald-soft text-emerald">
                 <svg width="22" height="22" viewBox="0 0 16 16" fill="none">
                   <path
                     d="M3 8.5l3.2 3L13 5"
@@ -155,7 +155,7 @@ function Field({
         required={required}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="rounded-xl border border-line bg-white px-3.5 py-2.5 text-[0.95rem] outline-none transition-colors focus:border-ink"
+        className="rounded-xl border border-line bg-bg-elev px-3.5 py-2.5 text-[0.95rem] outline-none transition-colors focus:border-emerald"
       />
     </label>
   );
