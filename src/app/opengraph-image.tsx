@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Aria — AI Front Desk for Aesthetic Clinics";
+export const alt = "Frontlea — The Front Desk Built for Aesthetic Clinics";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -17,8 +17,8 @@ export default function OG() {
           justifyContent: "space-between",
           padding: 72,
           background:
-            "radial-gradient(circle at 18% 12%, rgba(245,185,127,0.18), transparent 55%), linear-gradient(135deg, #0a0814 0%, #16162a 100%)",
-          color: "#f4ecd9",
+            "linear-gradient(180deg, #eef3fb 0%, #dbe5f3 100%)",
+          color: "#0c1730",
           fontFamily: "ui-serif, Georgia, serif",
         }}
       >
@@ -26,23 +26,22 @@ export default function OG() {
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 18,
-            fontSize: 24,
-            color: "#f5b97f",
-            letterSpacing: "0.18em",
+            gap: 14,
+            fontSize: 22,
+            color: "#38496b",
+            letterSpacing: "0.22em",
             textTransform: "uppercase",
             fontFamily: "ui-monospace, Menlo, monospace",
           }}
         >
           <div
             style={{
-              width: 14,
-              height: 14,
-              borderRadius: "50%",
-              background: "#f5b97f",
+              width: 28,
+              height: 1,
+              background: "#0f2a64",
             }}
           />
-          Aria · The AI Front Desk
+          Frontlea — Est. 2026
         </div>
         <div
           style={{
@@ -53,27 +52,27 @@ export default function OG() {
         >
           <div
             style={{
-              fontSize: 88,
+              fontSize: 92,
               lineHeight: 1.02,
-              maxWidth: 950,
+              maxWidth: 980,
               letterSpacing: "-0.02em",
             }}
           >
-            Turn missed calls into{" "}
-            <span style={{ color: "#f5b97f", fontStyle: "italic" }}>
+            The front desk that turns missed calls into{" "}
+            <span style={{ color: "#0f2a64", fontStyle: "italic" }}>
               booked appointments.
             </span>
           </div>
           <div
             style={{
-              fontSize: 28,
-              color: "#cdc4ae",
-              maxWidth: 900,
-              lineHeight: 1.35,
+              fontSize: 26,
+              color: "#38496b",
+              maxWidth: 920,
+              lineHeight: 1.4,
             }}
           >
-            The managed AI receptionist for med spas, cosmetic dental, and plastic surgery.
-            Voice, web, IG, no-show recovery — one service.
+            A managed front desk service for med spas, cosmetic dental and plastic surgery.
+            Voice, web, IG, no-show recovery — under one roof.
           </div>
         </div>
         <div
@@ -81,13 +80,13 @@ export default function OG() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            fontSize: 22,
-            color: "#cdc4ae",
+            fontSize: 20,
+            color: "#38496b",
             fontFamily: "ui-monospace, Menlo, monospace",
           }}
         >
           <div>Founder-built · &lt; 40 clinics · TX · FL · AZ · NV · SoCal · NY/NJ</div>
-          <div style={{ color: "#f5b97f" }}>aria.work</div>
+          <div style={{ color: "#0f2a64", fontWeight: 600 }}>frontlea.com</div>
         </div>
       </div>
     ),

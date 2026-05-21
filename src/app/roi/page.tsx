@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/page-header";
 import { RoiCalculator } from "@/components/roi-calculator";
 
 export const metadata: Metadata = {
-  title: "ROI calculator — Aria",
+  title: "ROI calculator — Frontlea",
   description:
     "Move the sliders. See the number your front desk doesn't want you to see. Conservative estimates — real deployments recover more.",
 };
@@ -18,7 +18,7 @@ const BENCHMARKS = [
   {
     metric: "85%",
     label: "Average recovery on missed calls",
-    sub: "Aria answers in 1.8s. The remaining 15% are scams, wrong numbers, and abandoned dials.",
+    sub: "Frontlea answers in 1.8s. The remaining 15% are scams, wrong numbers, and abandoned dials.",
   },
   {
     metric: "−12pp",
@@ -33,7 +33,7 @@ const BENCHMARKS = [
 ];
 
 const ASSUMPTIONS: [string, string][] = [
-  ["Aria answer rate", "85% of currently-missed calls"],
+  ["Frontlea answer rate", "85% of currently-missed calls"],
   ["No-show rate target", "12% (down from your current baseline)"],
   ["Average first-year patient value", "Your input — defaults to $1,500"],
   ["Booking conversion on answered calls", "Your input — defaults to 28%"],

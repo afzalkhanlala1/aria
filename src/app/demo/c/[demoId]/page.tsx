@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { PageHeader } from "@/components/page-header";
-import { AskAria } from "@/components/ask-aria";
+import { AskFrontlea } from "@/components/ask-aria";
 import type { ClinicProfile } from "@/lib/demo-store";
 
 export const dynamic = "force-dynamic";
@@ -35,10 +35,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { demoId } = await params;
   const data = await fetchDemo(demoId);
-  if (!data) return { title: "Demo expired — Aria" };
+  if (!data) return { title: "Demo expired — Frontlea" };
   return {
-    title: `Custom Aria for ${data.profile.brandName}`,
-    description: `Try Aria — the AI front desk — trained on ${data.profile.brandName}'s public website. Ask anything a real patient would.`,
+    title: `Custom Frontlea for ${data.profile.brandName}`,
+    description: `Try Frontlea — the AI front desk — trained on ${data.profile.brandName}'s public website. Ask anything a real patient would.`,
     robots: { index: false, follow: false }, // per-clinic demo URLs shouldn't be indexed
   };
 }
@@ -71,7 +71,7 @@ export default async function CustomDemoPage({
         title={
           <>
             Meet{" "}
-            <em className="italic text-emerald">Aria for {profile.brandName}.</em>
+            <em className="italic text-emerald">Frontlea for {profile.brandName}.</em>
           </>
         }
         intro={
@@ -100,7 +100,7 @@ export default async function CustomDemoPage({
       />
 
       <section className="mx-auto max-w-7xl px-5 py-16 lg:px-10 lg:py-20">
-        <AskAria
+        <AskFrontlea
           demoId={demoId}
           brandName={profile.brandName}
           quickPrompts={quick}
@@ -108,14 +108,14 @@ export default async function CustomDemoPage({
             eyebrow: `Sandbox · trained on ${new URL(profile.website).hostname}`,
             heading: (
               <>
-                Aria, for{" "}
+                Frontlea, for{" "}
                 <em className="italic text-emerald">{profile.brandName}.</em>
               </>
             ),
             body: (
               <>
                 <p>
-                  This Aria knows what your website says — services, providers, hours, brand voice.
+                  This Frontlea knows what your website says — services, providers, hours, brand voice.
                   She{`'`}ll flag anything missing (we found{" "}
                   <strong className="text-ink">
                     {profile.knownGaps.length} gap{profile.knownGaps.length === 1 ? "" : "s"}

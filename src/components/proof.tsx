@@ -17,7 +17,7 @@ const STORIES = [
     metric: "186",
     metricLabel: "After-hours bookings in 90 days",
     quote:
-      "Aria booked patients while I was asleep. I stopped checking voicemails. My team stopped feeling buried.",
+      "Frontlea booked patients while I was asleep. I stopped checking voicemails. My team stopped feeling buried.",
     who: "RN-Injector / Owner · Scottsdale, AZ",
   },
 ];

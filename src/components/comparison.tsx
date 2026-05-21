@@ -60,7 +60,7 @@ export function Comparison() {
   return (
     <section className="mx-auto max-w-7xl px-5 py-20 lg:px-10 lg:py-28">
       <div className="max-w-3xl">
-        <span className="eyebrow">Why owners choose Aria</span>
+        <span className="eyebrow">Why owners choose Frontlea</span>
         <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
           More than a phone bot.{" "}
           <em className="italic text-emerald">A managed revenue function.</em>
@@ -77,10 +77,7 @@ export function Comparison() {
             <div className="grid grid-cols-[1.4fr_1fr_1fr_1fr] border-b border-line bg-bg-soft/50 text-[0.65rem] uppercase tracking-widest text-ink-faint">
               <div className="px-5 py-4">Capability</div>
               <div className="border-l border-line bg-accent-bg px-5 py-4 text-accent-fg">
-                <div className="flex items-center gap-2 font-mono">
-                  <span className="size-1.5 rounded-full bg-emerald" />
-                  Aria
-                </div>
+                <div className="font-mono">Frontlea</div>
               </div>
               <div className="border-l border-line px-5 py-4">In-house receptionist</div>
               <div className="border-l border-line px-5 py-4">Generic AI voice tool</div>

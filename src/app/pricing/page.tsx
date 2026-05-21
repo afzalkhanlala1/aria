@@ -6,7 +6,7 @@ import { PricingAddons } from "@/components/pricing-addons";
 import { Comparison } from "@/components/comparison";
 
 export const metadata: Metadata = {
-  title: "Pricing — Aria",
+  title: "Pricing — Frontlea",
   description:
     "One flat retainer. No seat licenses, no usage gotchas. If we don't recover 3× our fee in 90 days, we extend the engagement free.",
 };
@@ -15,7 +15,7 @@ const GUARANTEES = [
   {
     title: "3× ROI in 90 days — or free.",
     body:
-      "If Aria doesn't recover at least 3× our monthly fee within your first 90 days, we extend the engagement at no charge until it does.",
+      "If Frontlea doesn't recover at least 3× our monthly fee within your first 90 days, we extend the engagement at no charge until it does.",
   },
   {
     title: "Cancel after 90 days.",
@@ -99,7 +99,7 @@ export default function PricingPage() {
           </h3>
           <p className="mt-4 text-ink-soft">
             Fully loaded, a single front-desk hire costs $52,000–$74,000/year, only works business
-            hours, gets sick, and quits. Aria is $30k/yr, works 168 hours/week, never quits,
+            hours, gets sick, and quits. Frontlea is $30k/yr, works 168 hours/week, never quits,
             and ships a P&L receipt every month.
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">

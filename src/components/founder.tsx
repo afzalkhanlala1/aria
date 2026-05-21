@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const PHONE = "+1 (816) 859-9999";
 const PHONE_HREF = "tel:+18168599999";
-const EMAIL = "ariapersonalagent@gmail.com";
+const EMAIL = "hello@frontlea.com";
 
 export function Founder() {
   return (
@@ -11,18 +11,19 @@ export function Founder() {
       <div className="mx-auto max-w-7xl px-5 py-20 lg:px-10 lg:py-28">
         <div className="grid items-center gap-12 lg:grid-cols-[auto_1fr] lg:gap-16">
           <div className="relative">
-            <div className="absolute -inset-6 -z-10 rounded-[2.5rem] bg-gradient-to-br from-emerald/20 via-transparent to-rose/15 blur-2xl" />
-            <div className="overflow-hidden rounded-[2rem] border border-line bg-bg-elev shadow-[0_30px_80px_-30px_rgba(13,15,14,0.35)]">
+            <div className="overflow-hidden rounded-2xl border border-line bg-bg-elev">
               <Image
                 src="/founder.png"
-                alt="Afzal Khan — founder of Aria"
+                alt="Afzal Khan — founder of Frontlea"
                 width={320}
                 height={400}
                 priority
                 className="size-[240px] object-cover sm:size-[300px] lg:size-[340px]"
               />
             </div>
-            <span className="tag-live absolute -bottom-3 left-4">Founder · talks to every clinic</span>
+            <div className="mt-4 font-mono text-[0.62rem] uppercase tracking-[0.22em] text-ink-soft">
+              Afzal Khan — Founder
+            </div>
           </div>
 
           <div className="max-w-2xl">
@@ -30,30 +31,30 @@ export function Founder() {
             <h2 className="mt-4 font-serif text-3xl leading-tight sm:text-5xl">
               Hi — I&apos;m{" "}
               <em className="italic text-emerald">Afzal.</em>{" "}
-              I run every Aria build personally.
+              I run every Frontlea build personally.
             </h2>
             <p className="mt-5 text-lg text-ink-soft">
-              Aria isn&apos;t a self-serve app you log into and figure out. It&apos;s a managed
+              Frontlea isn&apos;t a self-serve app you log into and figure out. It&apos;s a managed
               service. I sit with you on the audit call, build the voice and chat agents myself,
               tune them with your team for 14 days, and stay on your monthly review. If something
               breaks at 2am, you text me — not a ticket queue.
             </p>
 
             <ul className="mt-7 grid gap-3 text-sm text-ink-soft sm:grid-cols-2">
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 size-1.5 rounded-full bg-emerald" />
+              <li className="flex items-start gap-2.5">
+                <span aria-hidden className="mt-[0.3rem] text-emerald">›</span>
                 Single owner, single point of contact
               </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 size-1.5 rounded-full bg-emerald" />
+              <li className="flex items-start gap-2.5">
+                <span aria-hidden className="mt-[0.3rem] text-emerald">›</span>
                 Built &amp; maintained for &lt; 40 clinics by design
               </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 size-1.5 rounded-full bg-emerald" />
+              <li className="flex items-start gap-2.5">
+                <span aria-hidden className="mt-[0.3rem] text-emerald">›</span>
                 Texts answered same hour during business days
               </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1.5 size-1.5 rounded-full bg-emerald" />
+              <li className="flex items-start gap-2.5">
+                <span aria-hidden className="mt-[0.3rem] text-emerald">›</span>
                 Monthly revenue review on Loom
               </li>
             </ul>

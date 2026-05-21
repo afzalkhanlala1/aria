@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 /**
- * "Try Aria on your site" — URL → /api/aria/build-demo → /demo/c/[demoId].
+ * "Try Frontlea on your site" — URL → /api/aria/build-demo → /demo/c/[demoId].
  *
  * Designed for the hero, but works inline anywhere. Forgives users dropping
  * "clinicname.com" without protocol — we prepend https://.
@@ -111,7 +111,7 @@ export function UrlDemo({
                 ? "Reading site…"
                 : stage === "thinking"
                   ? "Learning your menu…"
-                  : "Building Aria…"}
+                  : "Building Frontlea…"}
             </>
           ) : (
             <>

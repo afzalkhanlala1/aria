@@ -3,18 +3,18 @@ import { Logo } from "./logo";
 
 const PHONE = "+1 (816) 859-9999";
 const PHONE_HREF = "tel:+18168599999";
-const EMAIL = "ariapersonalagent@gmail.com";
+const EMAIL = "hello@frontlea.com";
 
 export function Footer() {
   return (
-    <footer className="relative z-10 border-t border-line bg-bg-soft/40">
+    <footer className="relative z-10 border-t border-line bg-bg-soft/50">
       <div className="mx-auto max-w-7xl px-5 py-16 lg:px-10">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Logo />
             <p className="mt-5 max-w-xs text-sm text-ink-soft">
-              Aria is the managed AI front desk for aesthetic clinics — voice, web, IG, no-show
-              recovery, and reactivation, in one service.
+              Frontlea is the managed front desk for aesthetic clinics — voice, web, IG, no-show
+              recovery, and reactivation, under one roof.
             </p>
             <div className="mt-6 flex flex-col gap-1.5 text-sm">
               <a href={PHONE_HREF} className="font-serif text-xl text-ink hover:text-emerald">
@@ -24,13 +24,14 @@ export function Footer() {
                 {EMAIL}
               </a>
             </div>
-            <div className="mt-6 flex items-center gap-2">
-              <span className="tag-live">Booking Q3 2026</span>
-              <span className="kbd">v2.5</span>
+            <div className="mt-6 flex items-center gap-3 font-mono text-[0.62rem] uppercase tracking-[0.22em] text-ink-faint">
+              <span>Booking Q3 2026</span>
+              <span aria-hidden>·</span>
+              <span>v2.5</span>
             </div>
           </div>
           <FooterCol
-            title="Product"
+            title="Service"
             links={[
               ["Live demo", "/demo"],
               ["How it works", "/how-it-works"],
@@ -61,9 +62,9 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-line pt-6 text-xs text-ink-faint sm:flex-row sm:items-center">
-          <span>© {new Date().getFullYear()} Aria Front Desk Systems · All rights reserved.</span>
-          <span className="font-mono">
-            <span className="text-emerald">●</span> live · TX · FL · AZ · NV · SoCal · NY/NJ
+          <span>© {new Date().getFullYear()} Frontlea Front Desk Co. · All rights reserved.</span>
+          <span className="font-mono uppercase tracking-[0.22em]">
+            Serving TX · FL · AZ · NV · SoCal · NY/NJ
           </span>
         </div>
       </div>

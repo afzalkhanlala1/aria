@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/page-header";
 import { FAQ } from "@/components/faq";
 
 export const metadata: Metadata = {
-  title: "FAQ — Aria",
+  title: "FAQ — Frontlea",
   description:
     "Answers to the questions clinic owners ask before they sign. HIPAA, integrations, voice quality, escalations, contracts, cancellation.",
 };
@@ -44,8 +44,8 @@ export default function FaqPage() {
             <Link href="/audit" className="btn-primary">
               Ask on the audit <span aria-hidden>→</span>
             </Link>
-            <a href="mailto:hello@aria.work" className="btn-ghost">
-              hello@aria.work
+            <a href="mailto:hello@frontlea.com" className="btn-ghost">
+              hello@frontlea.com
             </a>
           </div>
         </div>

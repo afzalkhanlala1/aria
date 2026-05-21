@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 const BASE =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://aria.work";
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://frontlea.com";
 
 const STATIC_ROUTES = [
   "",

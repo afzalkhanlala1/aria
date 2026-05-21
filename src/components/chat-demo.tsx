@@ -68,8 +68,8 @@ export function ChatDemo() {
           <em className="italic text-emerald">will DM you at 11pm.</em>
         </h3>
         <p className="mt-5 text-ink-soft">
-          Aria lives on your website and Instagram inbox, trained on your treatment menu, providers,
-          pricing and policies. She answers within seconds, qualifies the lead, and books — same brain,
+          Frontlea lives on your website and Instagram inbox, trained on your treatment menu, providers,
+          pricing and policies. It answers within seconds, qualifies the lead, and books — same brain,
           same booking power as the voice agent.
         </p>
 
@@ -80,8 +80,8 @@ export function ChatDemo() {
             "Hands off cleanly to humans during business hours when needed",
             "Captures source (IG ad, organic, web) for clean attribution",
           ].map((t) => (
-            <li key={t} className="flex items-start gap-3 text-ink-soft">
-              <span className="mt-1.5 size-1.5 rounded-full bg-emerald" />
+            <li key={t} className="flex items-start gap-2.5 text-ink-soft">
+              <span aria-hidden className="mt-[0.3rem] text-emerald">›</span>
               <span>{t}</span>
             </li>
           ))}
@@ -95,14 +95,14 @@ export function ChatDemo() {
       {/* Phone-mockup chat */}
       <div className="mx-auto w-full max-w-md">
         <div className="card overflow-hidden rounded-[2rem] shadow-[0_30px_80px_-30px_rgba(13,15,14,0.3)]">
-          <div className="flex items-center justify-between border-b border-line bg-gradient-to-r from-rose/15 via-bg-soft to-emerald-soft/40 px-4 py-3">
+          <div className="flex items-center justify-between border-b border-line bg-bg-soft/60 px-4 py-3">
             <div className="flex items-center gap-3">
               <div className="grid size-9 place-items-center rounded-full bg-accent-bg font-serif text-accent-fg">
                 L
               </div>
               <div>
                 <div className="text-sm font-medium">luxeaesthetics</div>
-                <div className="font-mono text-[0.65rem] uppercase tracking-widest text-emerald">
+                <div className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">
                   Active now
                 </div>
               </div>
@@ -162,8 +162,8 @@ function Bubble({ msg }: { msg: Msg }) {
         {msg.text}
       </div>
       {msg.tag && (
-        <span className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-emerald-soft px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-widest text-emerald">
-          <span className="size-1 rounded-full bg-emerald" /> {msg.tag}
+        <span className="mt-1.5 inline-flex items-center rounded bg-emerald-soft px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-widest text-emerald">
+          {msg.tag}
         </span>
       )}
     </div>

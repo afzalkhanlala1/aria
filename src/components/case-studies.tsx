@@ -67,7 +67,7 @@ const CASE_STUDIES: CaseStudy[] = [
     },
     quote: {
       text:
-        "Aria booked patients while I was asleep. I stopped checking voicemails. My team stopped feeling buried.",
+        "Frontlea booked patients while I was asleep. I stopped checking voicemails. My team stopped feeling buried.",
       by: "RN-Injector / Owner · Scottsdale, AZ",
     },
   },
@@ -83,7 +83,7 @@ export function CaseStudies() {
           <em className="italic text-emerald">Before and after.</em>
         </h2>
         <p className="mt-5 text-lg text-ink-soft">
-          Each row is an actual reference client running Aria today. Numbers are pulled directly
+          Each row is an actual reference client running Frontlea today. Numbers are pulled directly
           from their owner dashboard, not estimated.
         </p>
       </div>
@@ -109,7 +109,7 @@ export function CaseStudies() {
 
               <div className="mt-7 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-line">
                 <BeforeAfter
-                  title="Before Aria"
+                  title="Before Frontlea"
                   rows={[
                     ["Inbound", cs.before.calls],
                     ["Missed call rate", cs.before.missed],
@@ -118,7 +118,7 @@ export function CaseStudies() {
                   ]}
                 />
                 <BeforeAfter
-                  title="After Aria"
+                  title="After Frontlea"
                   accent
                   rows={[
                     ["Inbound", cs.after.calls],

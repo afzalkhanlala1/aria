@@ -3,9 +3,9 @@ import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 
 export const metadata: Metadata = {
-  title: "Security & HIPAA-aligned operations — Aria",
+  title: "Security & HIPAA-aligned operations — Frontlea",
   description:
-    "How Aria handles PHI, BAAs, encryption in transit/at rest, sub-processors, access controls, retention, and incident response — purpose-built for aesthetic and medical practices.",
+    "How Frontlea handles PHI, BAAs, encryption in transit/at rest, sub-processors, access controls, retention, and incident response — purpose-built for aesthetic and medical practices.",
   alternates: { canonical: "/compliance" },
 };
 
@@ -14,7 +14,7 @@ const PRINCIPLES = [
     n: "01",
     title: "Sign a BAA before we touch PHI",
     body:
-      "Aria operates under a written Business Associate Agreement with every clinic that handles PHI. We countersign before any go-live, with our sub-processors covered downstream.",
+      "Frontlea operates under a written Business Associate Agreement with every clinic that handles PHI. We countersign before any go-live, with our sub-processors covered downstream.",
   },
   {
     n: "02",
@@ -84,7 +84,7 @@ export default function CompliancePage() {
         }
         intro={
           <>
-            Aria is operated under written BAAs with HIPAA-eligible sub-processors, encrypted
+            Frontlea is operated under written BAAs with HIPAA-eligible sub-processors, encrypted
             end-to-end, with logging that&apos;s actually auditable. This page tells you exactly what
             that means today — and what we&apos;re not claiming yet.
           </>
@@ -198,8 +198,8 @@ export default function CompliancePage() {
             </p>
             <ul className="mt-7 space-y-3 text-sm text-ink-soft">
               {PROMISES.map((line) => (
-                <li key={line} className="flex items-start gap-3">
-                  <span className="mt-1.5 size-1.5 rounded-full bg-emerald" />
+                <li key={line} className="flex items-start gap-2.5">
+                  <span aria-hidden className="mt-[0.3rem] text-emerald">›</span>
                   <span>{line}</span>
                 </li>
               ))}
@@ -217,8 +217,8 @@ export default function CompliancePage() {
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-accent-fg/75">
             Email{" "}
-            <a className="underline decoration-accent-emerald/60 hover:decoration-accent-emerald" href="mailto:ariapersonalagent@gmail.com">
-              ariapersonalagent@gmail.com
+            <a className="underline decoration-accent-emerald/60 hover:decoration-accent-emerald" href="mailto:hello@frontlea.com">
+              hello@frontlea.com
             </a>{" "}
             or text <a className="underline decoration-accent-emerald/60 hover:decoration-accent-emerald" href="tel:+18168599999">+1 (816) 859-9999</a>. Founder runs every response personally.
           </p>

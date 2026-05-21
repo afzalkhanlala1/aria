@@ -2,7 +2,7 @@
  * Light-touch HTML scraper. Designed for clinic marketing sites which are
  * almost always server-rendered (Squarespace, Wix, Webflow, WordPress).
  * For JS-only sites we degrade to "couldn't find content, here's a generic
- * Aria" and the user can describe their clinic to the chat agent directly.
+ * Frontlea" and the user can describe their clinic to the chat agent directly.
  *
  * Hardening on top of raw fetch:
  *   - Timeout (8s) to avoid hanging on slow sites
@@ -19,7 +19,7 @@ const MAX_BYTES = 5 * 1024 * 1024;
 // Some clinic sites (Cloudflare-fronted, etc.) 403 a bare bot UA, so we send
 // a real-looking Chrome string. We still identify ourselves via Referer.
 const USER_AGENT =
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 AriaDemoBot/1.0 (+https://aria.work)";
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 FrontleaDemoBot/1.0 (+https://frontlea.com)";
 
 const SUB_PAGE_KEYWORDS = [
   "pricing",

@@ -112,9 +112,12 @@ export function MissionControl() {
     <div className="card overflow-hidden rounded-3xl">
       <div className="flex items-center justify-between border-b border-line bg-bg-soft/70 px-5 py-3">
         <div className="flex items-center gap-3">
-          <span className="tag-live">Mission Control</span>
+          <span className="font-mono text-[0.65rem] uppercase tracking-[0.22em] text-ink">
+            Mission Control
+          </span>
+          <span className="text-ink-faint" aria-hidden>/</span>
           <span className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">
-            aria · luxe aesthetics · austin
+            Frontlea · Luxe Aesthetics · Austin
           </span>
         </div>
         <button
@@ -127,7 +130,7 @@ export function MissionControl() {
 
       <div className="grid gap-px bg-line sm:grid-cols-4">
         <Metric label="Conversations · today" value={totals.answered} sub="all channels" />
-        <Metric label="Booked by Aria" value={totals.booked} sub="incl. reactivation" accent />
+        <Metric label="Booked by Frontlea" value={totals.booked} sub="incl. reactivation" accent />
         <Metric
           label="Revenue captured"
           value={`$${totals.revenue.toLocaleString()}`}
@@ -150,12 +153,6 @@ export function MissionControl() {
             <span className="font-mono text-[0.65rem] text-ink-faint">most recent first</span>
           </div>
           <ul className="relative max-h-[440px] overflow-hidden">
-            {running && (
-              <span
-                aria-hidden
-                className="scan-line pointer-events-none absolute inset-x-0 z-10 h-12 bg-gradient-to-b from-transparent via-emerald/8 to-transparent"
-              />
-            )}
             {events.map((e) => (
               <li
                 key={e.id}
@@ -195,7 +192,7 @@ export function MissionControl() {
           </div>
           <div className="mx-5 mb-5 rounded-2xl border border-dashed border-line bg-bg-elev/40 p-4 text-xs text-ink-soft">
             <strong className="text-ink">What this is:</strong> the live feed your owner sees
-            inside the Aria console — each event is something Aria handled in real time, so you can
+            inside the Frontlea console — each event is something Frontlea handled in real time, so you can
             audit transcripts in one click.
           </div>
         </div>
@@ -231,7 +228,11 @@ function Metric({
         ].join(" ")}
       >
         <span>{label}</span>
-        {live && <span className="tag-live">live</span>}
+        {live && (
+          <span className="font-mono text-[0.55rem] uppercase tracking-[0.22em] text-emerald">
+            Now
+          </span>
+        )}
       </div>
       <div className="mt-2 flex items-baseline gap-1.5">
         <span className="font-serif text-3xl leading-none">{value}</span>

@@ -9,7 +9,7 @@ export type VoiceScenarioId = "new" | "after-hours" | "reschedule";
 
 export const VOICE_SCRIPT: Record<VoiceScenarioId, VoiceTurn[]> = {
   new: [
-    { who: "aria", text: "Thank you for calling Luxe Aesthetics, this is Aria. How can I help you today?", delay: 600 },
+    { who: "aria", text: "Thank you for calling Luxe Aesthetics, this is Frontlea. How can I help you today?", delay: 600 },
     { who: "caller", text: "Hi, I was wondering how much you charge for Botox?", delay: 1800 },
     { who: "aria", text: "Of course — our Botox starts at thirteen dollars per unit, with most patients using between twenty and forty units. Are you new to Luxe, or have you been with us before?", delay: 1600 },
     { who: "caller", text: "I'm new. I'd love to try it for my forehead lines.", delay: 1500 },
@@ -29,7 +29,7 @@ export const VOICE_SCRIPT: Record<VoiceScenarioId, VoiceTurn[]> = {
     { who: "aria", text: "Booked. Sending confirmation by text and email now. See you Saturday!", delay: 1300 },
   ],
   reschedule: [
-    { who: "aria", text: "Hi Sarah, this is Aria from Luxe Aesthetics — I'm calling because we missed you for your three thirty today. I'd love to help you reschedule. Is now a good time?", delay: 700 },
+    { who: "aria", text: "Hi Sarah, this is Frontlea from Luxe Aesthetics — I'm calling because we missed you for your three thirty today. I'd love to help you reschedule. Is now a good time?", delay: 700 },
     { who: "caller", text: "Oh shoot, I totally forgot. Yes, I want to reschedule.", delay: 1700 },
     { who: "aria", text: "No problem — these things happen. I have Friday at eleven or Monday at two with Dr. Patel. Any preference?", delay: 1500 },
     { who: "caller", text: "Friday 11am.", delay: 1000 },

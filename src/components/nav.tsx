@@ -78,12 +78,12 @@ export function Nav() {
           })}
         </ul>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <a
             href={PHONE_HREF}
             className="hidden font-mono text-[0.7rem] uppercase tracking-widest text-ink-faint transition-colors hover:text-emerald xl:inline-flex"
           >
-            <span className="text-emerald">●</span>&nbsp;{PHONE}
+            {PHONE}
           </a>
           <div className="hidden md:inline-flex">
             <ThemeToggle />
@@ -150,9 +150,7 @@ export function Nav() {
                 href={PHONE_HREF}
                 className="flex items-center justify-between rounded-xl px-1 text-sm text-ink-soft"
               >
-                <span>
-                  <span className="text-emerald">●</span>&nbsp;Call or text
-                </span>
+                <span>Call or text</span>
                 <span className="font-serif text-base text-ink">{PHONE}</span>
               </a>
               <div className="flex items-center justify-between gap-3">

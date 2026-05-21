@@ -4,9 +4,9 @@ const apiKey = process.env.RESEND_API_KEY;
 export const resend = apiKey ? new Resend(apiKey) : null;
 
 export const FROM =
-  process.env.RESEND_FROM || "Aria <onboarding@resend.dev>";
+  process.env.RESEND_FROM || "Frontlea <onboarding@resend.dev>";
 export const LEAD_INBOX =
-  process.env.LEAD_NOTIFICATION_EMAIL || "ariapersonalagent@gmail.com";
+  process.env.LEAD_NOTIFICATION_EMAIL || "hello@frontlea.com";
 
 export function escapeHtml(s: string): string {
   return s

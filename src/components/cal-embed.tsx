@@ -16,20 +16,20 @@ export function CalEmbed({
 }) {
   useEffect(() => {
     (async () => {
-      const cal = await getCalApi({ namespace: "aria-audit" });
+      const cal = await getCalApi({ namespace: "frontlea-audit" });
       cal("ui", {
         hideEventTypeDetails: false,
         layout: "month_view",
         cssVarsPerTheme: {
           light: {
-            "cal-brand": "#b1431c",
-            "cal-text": "#14110e",
+            "cal-brand": "#0f2a64",
+            "cal-text": "#0c1730",
             "cal-bg": "#ffffff",
           },
           dark: {
-            "cal-brand": "#f5b97f",
-            "cal-text": "#f4ecd9",
-            "cal-bg": "#16162a",
+            "cal-brand": "#6c9bff",
+            "cal-text": "#e6eefc",
+            "cal-bg": "#101a3b",
           },
         },
       });
@@ -50,9 +50,9 @@ export function CalEmbed({
   }
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-line bg-bg-elev shadow-[0_24px_60px_-30px_rgba(13,15,14,0.3)]">
+    <div className="overflow-hidden rounded-2xl border border-line bg-bg-elev">
       <Cal
-        namespace="aria-audit"
+        namespace="frontlea-audit"
         calLink={link}
         style={{ width: "100%", height, overflow: "scroll" }}
         config={{ layout: "month_view" }}

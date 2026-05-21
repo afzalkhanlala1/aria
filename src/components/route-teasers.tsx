@@ -13,7 +13,7 @@ const TEASERS: Teaser[] = [
   {
     href: "/demo",
     label: "Live demo",
-    title: "Talk to Aria — right now.",
+    title: "Talk to Frontlea — right now.",
     desc:
       "Open the interactive sandbox. Ask anything a real patient would, watch her book scripted scenarios, and tour the live mission control.",
     meta: "3 interactive demos",

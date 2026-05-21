@@ -5,7 +5,7 @@ import { AuditCTA } from "@/components/cta";
 import { CalEmbed } from "@/components/cal-embed";
 
 export const metadata: Metadata = {
-  title: "Free Revenue Audit — Aria",
+  title: "Free Revenue Audit — Frontlea",
   description:
     "We'll call your clinic three times — business hours, lunch, and after 6pm — record what happens, and send you a 4-minute Loom showing the exact revenue you're leaving on the table. Free. 1 business day.",
 };
@@ -25,7 +25,7 @@ const STEPS = [
   },
   {
     n: "03",
-    title: "We build a custom Aria demo",
+    title: "We build a custom Frontlea demo",
     body:
       "We train a working voice + chat sandbox on your treatment menu, pricing tiers, and brand voice.",
   },
@@ -57,7 +57,7 @@ export default function AuditPage() {
         }
         intro={
           <>
-            We test your phone line, build a custom Aria demo on your real menu, and send you a
+            We test your phone line, build a custom Frontlea demo on your real menu, and send you a
             4-minute walkthrough — within one business day. No pitch, no obligation.
           </>
         }
@@ -106,7 +106,7 @@ export default function AuditPage() {
               <em className="italic text-emerald">Afzal&apos;s calendar.</em>
             </h2>
             <p className="mt-4 text-ink-soft">
-              No demo decks, no SDR call. Just a quick scoping conversation to see if Aria is
+              No demo decks, no SDR call. Just a quick scoping conversation to see if Frontlea is
               the right fit for your clinic. Founder runs the call.
             </p>
           </div>
@@ -115,10 +115,10 @@ export default function AuditPage() {
               +1 (816) 859-9999
             </a>
             <a
-              href="mailto:ariapersonalagent@gmail.com"
+              href="mailto:hello@frontlea.com"
               className="hover:text-emerald"
             >
-              ariapersonalagent@gmail.com
+              hello@frontlea.com
             </a>
           </div>
         </div>

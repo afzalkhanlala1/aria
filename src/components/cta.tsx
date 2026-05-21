@@ -43,9 +43,9 @@ export function AuditCTA() {
 
     // Best-effort local backup so a single Resend hiccup never loses a lead.
     try {
-      const prev = JSON.parse(localStorage.getItem("aria-audits") || "[]");
+      const prev = JSON.parse(localStorage.getItem("frontlea-audits") || "[]");
       prev.push({ ...data, ts: new Date().toISOString() });
-      localStorage.setItem("aria-audits", JSON.stringify(prev));
+      localStorage.setItem("frontlea-audits", JSON.stringify(prev));
     } catch {}
 
     try {
@@ -96,10 +96,10 @@ export function AuditCTA() {
                 "3 live phone-test recordings of your front desk",
                 "Lost-revenue estimate based on your average ticket",
                 "A 4-minute Loom walkthrough with your name on it",
-                "Sample Aria voice agent trained on your menu",
+                "Sample Frontlea voice agent trained on your menu",
               ].map((line) => (
-                <li key={line} className="flex items-start gap-3 text-ink-soft">
-                  <span className="mt-1.5 size-1.5 rounded-full bg-emerald" />
+                <li key={line} className="flex items-start gap-2.5 text-ink-soft">
+                  <span aria-hidden className="mt-[0.3rem] text-emerald">›</span>
                   {line}
                 </li>
               ))}
@@ -119,12 +119,12 @@ export function AuditCTA() {
                 <br />
                 <span className="font-serif text-2xl text-ink">+1 (816) 859-9999</span>
               </a>
-              <a href="mailto:ariapersonalagent@gmail.com" className="text-ink-soft hover:text-emerald">
+              <a href="mailto:hello@frontlea.com" className="text-ink-soft hover:text-emerald">
                 <span className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">
                   Email
                 </span>
                 <br />
-                ariapersonalagent@gmail.com
+                hello@frontlea.com
               </a>
             </div>
           </div>

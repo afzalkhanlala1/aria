@@ -87,7 +87,7 @@ const FEATURES = [
     title: "Owner dashboard",
     sub: "Why clients renew",
     body:
-      "Calls answered vs. missed (before/after), leads by source, appts booked by Aria, no-show delta, reviews generated, revenue recovered. Monthly review call.",
+      "Calls answered vs. missed (before/after), leads by source, appts booked by Frontlea, no-show delta, reviews generated, revenue recovered. Monthly review call.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="size-6">
         <path
@@ -111,7 +111,7 @@ export function Features() {
           <em className="italic text-emerald">Zero new hires.</em>
         </h2>
         <p className="mt-5 text-lg text-ink-soft">
-          Aria isn&apos;t software you have to learn. It&apos;s a fully managed AI front desk
+          Frontlea isn&apos;t software you have to learn. It&apos;s a fully managed AI front desk
           we build, run and optimize for your clinic — measured against a single number: net new
           revenue.
         </p>

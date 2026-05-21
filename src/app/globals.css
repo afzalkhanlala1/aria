@@ -3,78 +3,75 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ──────────────────────────────────────────────────────────────────────
-   LIGHT THEME — "Boutique Console"
-   Warm cream paper · burnt copper accent · deep aubergine on dark panels.
-   Distinctive med-spa premium feel; deliberately avoids the generic
-   AI-green palette every competitor uses.
-   The CSS variable names still say "emerald" for backwards compatibility
-   with components — the actual color is a rich burnt-copper.
+   LIGHT THEME — "Atelier Blue"
+   Soft paper-blue page · deep ink-navy primary for CTAs · dark sapphire
+   panels for inverted sections. Editorial, restrained, agency-leaning —
+   no glow effects, no neon. The accent variable is still named --emerald
+   for backwards compatibility with existing components; the actual color
+   is a deep navy.
    ────────────────────────────────────────────────────────────────────── */
 :root {
-  --bg:           #f4ecdb;
-  --bg-soft:      #ede2c5;
+  --bg:           #eef3fb;          /* light paper blue */
+  --bg-soft:      #e2eaf5;          /* slightly deeper paper for strips */
   --bg-elev:      #ffffff;
-  --ink:          #14110e;
-  --ink-soft:     #45403a;
-  --ink-faint:    #837b6f;
-  --line:         #d6c9ad;
-  --line-soft:    #e8dcc1;
-  --emerald:      #b1431c;          /* burnt copper — primary brand accent */
-  --emerald-soft: #f4dccb;
-  --emerald-deep: #2a0d04;
-  --emerald-glow: rgba(177, 67, 28, 0.42);
-  --gold:         #c4a14a;
-  --rose:         #d68b69;
-  --danger:       #a01e30;
-  --success:      #2f7a4f;          /* muted sage — used only for "booked/success", never as primary brand */
-  --grid:         rgba(20, 17, 14, 0.05);
-  --grid-fade:    rgba(244, 236, 219, 0);
-  --halo:         rgba(177, 67, 28, 0.18);
-  --paper:        #f4ecdb;
-  --accent-bg:    #1d1410;          /* deep walnut for inverted panels */
-  --accent-fg:    #f4ecdb;
-  --accent-emerald: #f8bb7d;        /* luminous amber for "live" dots & emphasis on dark surfaces */
-  --accent-soft:  rgba(255, 255, 255, 0.06);
-  --accent-line:  rgba(248, 187, 125, 0.22);
+  --ink:          #0c1730;          /* near-black with a navy bias */
+  --ink-soft:     #38496b;
+  --ink-faint:    #6c7e9c;
+  --line:         #c9d6e7;
+  --line-soft:    #dde6f1;
+  --emerald:      #0f2a64;          /* deep navy — primary brand accent */
+  --emerald-soft: #dbe5f7;
+  --emerald-deep: #061436;
+  --emerald-glow: rgba(15, 42, 100, 0.32);
+  --gold:         #b08545;          /* warm muted gold for tasteful emphasis */
+  --rose:         #6b7fa3;          /* secondary slate-blue, never neon */
+  --danger:       #a32a3a;
+  --success:      #2c6a4a;          /* muted sage for "booked/success" only */
+  --grid:         rgba(12, 23, 48, 0.045);
+  --grid-fade:    rgba(238, 243, 251, 0);
+  --halo:         rgba(15, 42, 100, 0.10);
+  --paper:        #eef3fb;
+  --accent-bg:    #0c1730;          /* deep navy ink for inverted panels */
+  --accent-fg:    #eef3fb;
+  --accent-emerald: #9fb6dd;        /* soft blue for emphasis on dark surfaces */
+  --accent-soft:  rgba(255, 255, 255, 0.05);
+  --accent-line:  rgba(159, 182, 221, 0.22);
 
   color-scheme: light;
 }
 
 /* ──────────────────────────────────────────────────────────────────────
-   DARK THEME — "Velvet Hour"
-   Deep midnight (slight violet, never green-tinted) · warm cream type ·
-   amber primary accent. Specifically tuned for readability:
-     · ink/ink-soft are warm beige not cool grey
-     · primary accent is amber, distinct from competitor palettes
-       (Vapi blue, Retell cyan, generic Cursor green)
-     · success keeps a clear sage so "booked" never reads as the brand color
+   DARK THEME — "Night Atelier"
+   Deep navy paper · soft ice-blue type · brighter blue for primary CTAs
+   so they read clearly against the dark background. Same editorial tone
+   as light mode; no glow halos, no AI-green, no warm amber.
    ────────────────────────────────────────────────────────────────────── */
 .dark {
-  --bg:           #0a0814;
-  --bg-soft:      #11101e;
-  --bg-elev:      #16162a;
-  --ink:          #f4ecd9;          /* warm cream — high readability */
-  --ink-soft:     #cdc4ae;          /* warmer beige-grey (was cool grey) */
-  --ink-faint:    #8a8273;
-  --line:         #23213a;
-  --line-soft:    #1a1828;
-  --emerald:      #f5b97f;          /* warm amber primary */
-  --emerald-soft: #2b1d12;
-  --emerald-deep: #1a1208;
-  --emerald-glow: rgba(245, 185, 127, 0.5);
-  --gold:         #f0c976;
-  --rose:         #f3b89b;
-  --danger:       #ff6b6b;
-  --success:      #84d6a1;          /* keep a sage success indicator, distinct from amber primary */
-  --grid:         rgba(255, 255, 255, 0.04);
-  --grid-fade:    rgba(10, 8, 20, 0);
-  --halo:         rgba(245, 185, 127, 0.22);
-  --paper:        #f4ecd9;
-  --accent-bg:    #1a1426;          /* deep aubergine for inverted panels */
-  --accent-fg:    #f4ecd9;
-  --accent-emerald: #ffc78a;        /* luminous amber for "live" dots & emphasis on dark surfaces */
-  --accent-soft:  rgba(245, 185, 127, 0.10);
-  --accent-line:  rgba(245, 185, 127, 0.22);
+  --bg:           #060c1d;
+  --bg-soft:      #0b1430;
+  --bg-elev:      #101a3b;
+  --ink:          #e6eefc;          /* soft ice white with a blue tint */
+  --ink-soft:     #b0c0dc;
+  --ink-faint:    #6c7e9c;
+  --line:         #1e2a4d;
+  --line-soft:    #161f3c;
+  --emerald:      #6c9bff;          /* bright readable blue for dark mode */
+  --emerald-soft: #15224a;
+  --emerald-deep: #2952c4;
+  --emerald-glow: rgba(108, 155, 255, 0.30);
+  --gold:         #d3b070;
+  --rose:         #8aa0c8;
+  --danger:       #ff7a8a;
+  --success:      #7fd0a6;
+  --grid:         rgba(255, 255, 255, 0.035);
+  --grid-fade:    rgba(6, 12, 29, 0);
+  --halo:         rgba(108, 155, 255, 0.16);
+  --paper:        #e6eefc;
+  --accent-bg:    #0a1230;
+  --accent-fg:    #e6eefc;
+  --accent-emerald: #9fb6dd;
+  --accent-soft:  rgba(108, 155, 255, 0.10);
+  --accent-line:  rgba(108, 155, 255, 0.22);
 
   color-scheme: dark;
 }
@@ -115,7 +112,7 @@ body {
 
 ::selection {
   background: var(--emerald);
-  color: var(--bg);
+  color: #ffffff;
 }
 
 .font-serif {
@@ -146,14 +143,11 @@ body {
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(70% 50% at 50% 0%, var(--halo) 0%, transparent 70%),
-    radial-gradient(40% 40% at 85% 110%, var(--halo) 0%, transparent 70%);
-  opacity: 0.7;
-  mix-blend-mode: screen;
+    radial-gradient(60% 40% at 50% 0%, var(--halo) 0%, transparent 70%);
+  opacity: 0.5;
 }
 :where(.dark) .page-grid::before {
-  mix-blend-mode: normal;
-  opacity: 1;
+  opacity: 0.7;
 }
 
 /* ── Decorative grain overlay (paper feel in light, film grain in dark) ── */
@@ -171,18 +165,17 @@ body {
   opacity: 0.05;
 }
 
-/* Subtle gradient mesh used behind hero */
+/* Subtle gradient mesh used behind hero — deliberately quiet so it reads
+   as paper, not as a generated AI background. */
 .mesh {
   background:
-    radial-gradient(60% 50% at 20% 10%, var(--halo) 0%, transparent 60%),
-    radial-gradient(50% 50% at 90% 20%, rgba(201, 166, 135, 0.22) 0%, transparent 65%),
-    radial-gradient(60% 60% at 60% 100%, var(--halo) 0%, transparent 60%);
+    radial-gradient(55% 45% at 18% 8%, var(--halo) 0%, transparent 60%),
+    radial-gradient(45% 45% at 92% 16%, rgba(15, 42, 100, 0.06) 0%, transparent 65%);
 }
 .dark .mesh {
   background:
-    radial-gradient(60% 50% at 20% 10%, rgba(245, 185, 127, 0.16) 0%, transparent 60%),
-    radial-gradient(50% 50% at 90% 20%, rgba(178, 132, 220, 0.12) 0%, transparent 65%),
-    radial-gradient(60% 60% at 60% 100%, rgba(245, 185, 127, 0.10) 0%, transparent 60%);
+    radial-gradient(55% 45% at 18% 8%, rgba(108, 155, 255, 0.12) 0%, transparent 60%),
+    radial-gradient(45% 45% at 92% 16%, rgba(108, 155, 255, 0.06) 0%, transparent 65%);
 }
 
 /* ── Animations ───────────────────────────────────────────────────── */
@@ -238,18 +231,10 @@ body {
 }
 .caret { animation: blink 1s steps(2, end) infinite; }
 
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 transparent, 0 0 18px -4px var(--emerald-glow); }
-  50%      { box-shadow: 0 0 0 0 transparent, 0 0 36px 0 var(--emerald-glow); }
-}
-.glow-pulse { animation: glow-pulse 3.2s ease-in-out infinite; }
-
-@keyframes scan-line {
-  0%   { transform: translateY(-100%); opacity: 0; }
-  10%  { opacity: 1; }
-  100% { transform: translateY(2200%); opacity: 0; }
-}
-.scan-line { animation: scan-line 6s linear infinite; }
+/* glow-pulse / scan-line intentionally removed — they made the page
+   feel like a generated AI mock. Keep the class names as no-ops so any
+   stragglers still resolve. */
+.glow-pulse, .scan-line { animation: none; }
 
 html { scroll-behavior: smooth; }
 
@@ -267,25 +252,24 @@ html { scroll-behavior: smooth; }
   justify-content: center;
   gap: 0.5rem;
   padding: 0.85rem 1.4rem;
-  background: var(--ink);
-  color: var(--bg);
-  border-radius: 999px;
+  background: var(--emerald);         /* deep navy in light, bright blue in dark */
+  color: #ffffff;
+  border-radius: 10px;                /* rectangular pill, not capsule */
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: -0.005em;
-  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.25s ease;
-  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.08) inset;
+  transition: background 0.18s ease, transform 0.18s ease;
 }
-.btn-primary:hover { background: var(--emerald-deep); transform: translateY(-1px); box-shadow: 0 12px 28px -12px var(--emerald-glow); }
+.btn-primary:hover {
+  background: var(--emerald-deep);
+  transform: translateY(-1px);
+}
 
 .dark .btn-primary {
-  background: var(--emerald);
-  color: #1d1006;
-  box-shadow: 0 0 0 1px rgba(245, 185, 127, 0.35), 0 16px 38px -12px var(--emerald-glow);
+  color: #061436;
 }
 .dark .btn-primary:hover {
-  background: #ffd1a1;
-  box-shadow: 0 0 0 1px rgba(245, 185, 127, 0.55), 0 22px 50px -10px var(--emerald-glow);
+  background: #94b6ff;
 }
 
 .btn-ghost {
@@ -295,19 +279,18 @@ html { scroll-behavior: smooth; }
   padding: 0.85rem 1.4rem;
   color: var(--ink);
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 10px;
   font-size: 0.95rem;
   font-weight: 500;
-  background: color-mix(in oklab, var(--bg-elev) 60%, transparent);
-  backdrop-filter: blur(8px);
+  background: var(--bg-elev);
   transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
 }
 .btn-ghost:hover {
-  border-color: var(--ink);
-  background: color-mix(in oklab, var(--bg-elev) 90%, transparent);
+  border-color: var(--emerald);
+  color: var(--emerald);
 }
 .dark .btn-ghost {
-  background: rgba(255, 255, 255, 0.025);
+  background: transparent;
   border-color: var(--line);
 }
 .dark .btn-ghost:hover {
@@ -315,90 +298,73 @@ html { scroll-behavior: smooth; }
   color: var(--emerald);
 }
 
-/* Chip */
+/* Editorial label — replaces the old "chip with status dot" pattern.
+   Static, typographic, no animation. */
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.35rem 0.75rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font-size: 0.78rem;
-  letter-spacing: 0.02em;
+  gap: 0.55rem;
+  padding: 0.3rem 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ink-soft);
-  background: color-mix(in oklab, var(--bg-elev) 50%, transparent);
-  backdrop-filter: blur(8px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
 }
-.dark .chip {
-  background: rgba(255, 255, 255, 0.025);
+.chip::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--emerald);
 }
 
-/* Section eyebrow */
+/* Section eyebrow — kept identical for consistency with .chip */
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  gap: 0.55rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 .eyebrow::before {
   content: "";
-  width: 18px;
+  width: 22px;
   height: 1px;
-  background: var(--ink-faint);
+  background: var(--emerald);
   display: inline-block;
 }
 
-/* Card */
+/* Card — flatter, more print-like */
 .card {
   background: var(--bg-elev);
   border: 1px solid var(--line);
-  border-radius: 20px;
+  border-radius: 14px;
   position: relative;
 }
 .dark .card {
-  background: linear-gradient(180deg, rgba(245, 185, 127, 0.025), rgba(255,255,255,0)) , var(--bg-elev);
-  box-shadow: 0 1px 0 0 rgba(245, 185, 127, 0.06) inset, 0 0 0 1px rgba(255,255,255,0.02) inset;
+  background: var(--bg-elev);
 }
 
-/* Glass card — used on the futuristic detail pages */
+/* Glass card — flat, no glow, just a clean translucent panel */
 .glass-card {
-  background: color-mix(in oklab, var(--bg-elev) 65%, transparent);
+  background: var(--bg-elev);
   border: 1px solid var(--line);
-  backdrop-filter: blur(14px) saturate(140%);
-  border-radius: 20px;
+  border-radius: 14px;
   position: relative;
 }
 .dark .glass-card {
-  background: rgba(22, 22, 42, 0.55);
-  border-color: rgba(245, 185, 127, 0.10);
-  box-shadow:
-    0 1px 0 rgba(245, 185, 127, 0.06) inset,
-    0 24px 80px -24px rgba(0, 0, 0, 0.6);
+  background: var(--bg-elev);
 }
 
-/* Glow ring (decorative, used behind feature icons / hero) */
-.glow-ring {
-  position: relative;
-  isolation: isolate;
-}
-.glow-ring::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, var(--emerald), transparent 50%, var(--rose));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  opacity: 0.7;
-  pointer-events: none;
-}
-.dark .glow-ring::before { opacity: 1; }
+/* Decorative ring kept as a no-op for backwards compat with markup. */
+.glow-ring { position: relative; }
 
 /* Section divider — futuristic mono label divider */
 .section-divider {
@@ -420,28 +386,21 @@ html { scroll-behavior: smooth; }
   background: var(--line);
 }
 
-/* Tag pill for live indicators */
+/* Quiet uppercase label — replaces the old animated "live" tag.
+   No pulsing dot, no neon background — just a typographic stamp. */
 .tag-live {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.2rem 0.55rem 0.2rem 0.45rem;
-  border-radius: 999px;
-  background: color-mix(in oklab, var(--emerald) 12%, transparent);
+  gap: 0.5rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  background: var(--emerald-soft);
   color: var(--emerald);
+  border: 1px solid color-mix(in oklab, var(--emerald) 18%, transparent);
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.62rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-}
-.tag-live::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: var(--emerald);
-  box-shadow: 0 0 0 0 var(--emerald-glow);
-  animation: pulseRing 1.8s cubic-bezier(0.66, 0, 0, 1) infinite;
 }
 
 /* Range slider — futuristic */

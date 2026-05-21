@@ -12,7 +12,7 @@ const ADDONS = [
   {
     name: "Bespoke voice clone",
     price: "+$600 / mo",
-    desc: "Replace the default Aria voice with a custom-cloned voice (consent-signed talent).",
+    desc: "Replace the default Frontlea voice with a custom-cloned voice (consent-signed talent).",
   },
   {
     name: "Multilingual desk",

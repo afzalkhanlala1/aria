@@ -5,7 +5,7 @@ import { Proof } from "@/components/proof";
 import { CaseStudies } from "@/components/case-studies";
 
 export const metadata: Metadata = {
-  title: "Customers — Aria",
+  title: "Customers — Frontlea",
   description:
     "Operator stories from 36 deployments across TX, FL, AZ, NV, SoCal and NY/NJ. Real numbers, real receipts.",
 };
@@ -30,7 +30,7 @@ export default function CustomersPage() {
         }
         intro={
           <>
-            Aria is the AI front desk for operators who care about a P&L receipt — not a dashboard
+            Frontlea is the AI front desk for operators who care about a P&L receipt — not a dashboard
             with vanity charts. These are the operators we serve, and what they&apos;ve seen.
           </>
         }
@@ -77,7 +77,7 @@ export default function CustomersPage() {
             <em className="italic text-emerald">a renewing operator.</em>
           </h3>
           <p className="mt-4 text-ink-soft">
-            Want to talk to a clinic owner running Aria today? We&apos;ll set you up with one in
+            Want to talk to a clinic owner running Frontlea today? We&apos;ll set you up with one in
             your specialty or region — no NDAs, no salespeople on the call.
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">

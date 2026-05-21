@@ -30,7 +30,7 @@ const TESTIMONIALS = [
   {
     initials: "AL",
     quote:
-      "I stopped checking voicemail at night. Aria booked four patients between midnight and 6am last week.",
+      "I stopped checking voicemail at night. Frontlea booked four patients between midnight and 6am last week.",
     who: "RN-Injector · solo med spa · Scottsdale, AZ",
     metric: "−61%",
     metricLabel: "No-show rate",

@@ -15,7 +15,7 @@ const NODES: Node[] = [
   { id: "sms", label: "SMS", sub: "Reactivation + reply", col: 1, row: 3, tone: "input" },
 
   // Core
-  { id: "router", label: "Aria Router", sub: "Channel + intent", col: 2, row: 1, tone: "core" },
+  { id: "router", label: "Frontlea Router", sub: "Channel + intent", col: 2, row: 1, tone: "core" },
   { id: "rag", label: "RAG context", sub: "Menu · pricing · FAQs", col: 2, row: 2, tone: "data" },
 
   // Brain
@@ -81,7 +81,7 @@ export function ArchitectureDiagram() {
           </div>
           <div className="hidden gap-2 text-xs text-ink-faint sm:flex">
             <Legend dot="bg-line"     label="Input / output" />
-            <Legend dot="bg-emerald"  label="Aria core" />
+            <Legend dot="bg-emerald"  label="Frontlea core" />
           </div>
         </div>
 
@@ -92,7 +92,7 @@ export function ArchitectureDiagram() {
             viewBox="0 0 1000 440"
             className="block min-w-[760px] w-full"
             role="img"
-            aria-label="Aria architecture diagram"
+            aria-label="Frontlea architecture diagram"
           >
             <defs>
               <marker

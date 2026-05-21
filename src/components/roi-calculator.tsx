@@ -23,7 +23,7 @@ export function RoiCalculator() {
     const lostAppts = missed * (bookingRate / 100);
     const lostRevenue = lostAppts * avgValue;
 
-    // Aria recovers ~85% of missed by answering 24/7
+    // Frontlea recovers ~85% of missed by answering 24/7
     const ariaCalls = missed * 0.85;
     const ariaAppts = ariaCalls * (bookingRate / 100);
     const ariaRevenue = ariaAppts * avgValue;
@@ -123,7 +123,7 @@ export function RoiCalculator() {
           className="pointer-events-none absolute -bottom-10 -left-10 size-52 rounded-full bg-rose/20 blur-3xl"
         />
 
-        <span className="eyebrow text-accent-fg/70">Today, without Aria</span>
+        <span className="eyebrow text-accent-fg/70">Today, without Frontlea</span>
         <div className="mt-3 flex items-end gap-3">
           <span className="font-serif text-5xl leading-none">
             {fmtCurrency(monthly.lostRevenue)}
@@ -136,7 +136,7 @@ export function RoiCalculator() {
 
         <div className="my-7 h-px bg-accent-line" />
 
-        <span className="eyebrow text-accent-fg/70">With Aria managed front desk</span>
+        <span className="eyebrow text-accent-fg/70">With Frontlea managed front desk</span>
         <div className="mt-3 grid grid-cols-2 gap-4">
           <ResultStat
             label="Recovered missed calls"
@@ -159,7 +159,7 @@ export function RoiCalculator() {
             </span>
           </div>
           <div className="mt-3 flex items-baseline justify-between text-sm">
-            <span className="text-accent-fg/70">Aria managed service</span>
+            <span className="text-accent-fg/70">Frontlea managed service</span>
             <span>−{fmtCurrency(monthly.ariaCost)}</span>
           </div>
           <div className="mt-1 flex items-baseline justify-between border-t border-accent-line pt-3">

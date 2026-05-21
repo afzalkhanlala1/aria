@@ -6,7 +6,7 @@ import { ArchitectureDiagram } from "@/components/architecture";
 import { IntegrationsGrid } from "@/components/integrations-grid";
 
 export const metadata: Metadata = {
-  title: "How it works — Aria",
+  title: "How it works — Frontlea",
   description:
     "From kickoff to first booked patient in two weeks. See the architecture, integrations, and four-stage rollout we run for every clinic.",
 };
@@ -94,19 +94,19 @@ const PRINCIPLES = [
     label: "02",
     title: "Done day-one, not day-90.",
     body:
-      "Database reactivation runs on day one. Most clinics book their first appointment from Aria within 48 hours of go-live.",
+      "Database reactivation runs on day one. Most clinics book their first appointment from Frontlea within 48 hours of go-live.",
   },
   {
     label: "03",
     title: "Single number you measure us against.",
     body:
-      "Net new revenue from Aria-attributed bookings. Everything else is internal plumbing. If we don't show it monthly, fire us.",
+      "Net new revenue from Frontlea-attributed bookings. Everything else is internal plumbing. If we don't show it monthly, fire us.",
   },
   {
     label: "04",
     title: "Hand-off, not lock-out.",
     body:
-      "Aria escalates surgical, post-op, medical or emotional calls to your team — by design. Humans always own what matters.",
+      "Frontlea escalates surgical, post-op, medical or emotional calls to your team — by design. Humans always own what matters.",
   },
 ];
 

@@ -3,13 +3,13 @@ import Link from "next/link";
 import { PageHeader } from "@/components/page-header";
 import { VoiceDemo } from "@/components/voice-demo";
 import { ChatDemo } from "@/components/chat-demo";
-import { AskAria } from "@/components/ask-aria";
+import { AskFrontlea } from "@/components/ask-aria";
 import { MissionControl } from "@/components/mission-control";
 
 export const metadata: Metadata = {
-  title: "Live demo — Aria",
+  title: "Live demo — Frontlea",
   description:
-    "Talk to Aria right now. Try the interactive sandbox, watch her handle real call scenarios, see DM concierge, and tour live Mission Control.",
+    "Try Frontlea right now. Interactive sandbox, real call scenarios, DM concierge, and a tour of Mission Control.",
 };
 
 export default function DemoPage() {
@@ -30,19 +30,20 @@ export default function DemoPage() {
           </>
         }
         meta={
-          <div className="flex flex-wrap items-center gap-2">
-            <Link href="#playground" className="chip">
-              <span className="size-1.5 rounded-full bg-emerald" /> Sandbox
-            </Link>
-            <Link href="#voice" className="chip">Voice scenarios</Link>
-            <Link href="#dm" className="chip">DM concierge</Link>
-            <Link href="#mission-control" className="chip">Mission control</Link>
-          </div>
+          <nav aria-label="Demo sections" className="flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.22em] text-ink-soft">
+            <Link href="#playground" className="hover:text-emerald">Sandbox</Link>
+            <span aria-hidden className="text-ink-faint">·</span>
+            <Link href="#voice" className="hover:text-emerald">Voice scenarios</Link>
+            <span aria-hidden className="text-ink-faint">·</span>
+            <Link href="#dm" className="hover:text-emerald">DM concierge</Link>
+            <span aria-hidden className="text-ink-faint">·</span>
+            <Link href="#mission-control" className="hover:text-emerald">Mission control</Link>
+          </nav>
         }
       />
 
       <section id="playground" className="mx-auto max-w-7xl scroll-mt-24 px-5 py-20 lg:px-10 lg:py-28">
-        <AskAria />
+        <AskFrontlea />
       </section>
 
       <section
@@ -54,7 +55,7 @@ export default function DemoPage() {
             <div className="max-w-3xl">
               <span className="eyebrow">Voice scenarios</span>
               <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
-                Hear Aria handle a real call.{" "}
+                Hear Frontlea handle a real call.{" "}
                 <em className="italic text-emerald">No download required.</em>
               </h2>
             </div>
@@ -88,7 +89,7 @@ export default function DemoPage() {
               </h2>
               <p className="mt-5 text-lg text-ink-soft">
                 Synthesized from real Luxe Aesthetics traffic patterns. Every event here is a
-                kind of conversation Aria handles every day, across every channel, with full
+                kind of conversation Frontlea handles every day, across every channel, with full
                 transcripts a click away.
               </p>
             </div>

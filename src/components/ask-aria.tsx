@@ -9,7 +9,7 @@ type ChatStatus = "active" | "wrapping" | "ended";
 const DEFAULT_GREETING: Msg = {
   who: "aria",
   text:
-    "Hi! I'm Aria — Luxe Aesthetics' AI front desk. Ask me anything a real patient would: pricing, booking, after-hours, even a tough question. I'll respond exactly the way I would on a live call.",
+    "Hi! I'm Frontlea — Luxe Aesthetics' AI front desk. Ask me anything a real patient would: pricing, booking, after-hours, even a tough question. I'll respond exactly the way I would on a live call.",
 };
 
 const DEFAULT_QUICK = [
@@ -26,7 +26,7 @@ const SOFT_LIMIT = 20;
 const HARD_LIMIT = 30;
 const SESSION_STORAGE_KEY = "aria-sandbox-session";
 
-export type AskAriaProps = {
+export type AskFrontleaProps = {
   /** Optional demo id from /api/aria/build-demo — chats use the custom prompt. */
   demoId?: string;
   /** Brand name shown in the chat header and the greeting. */
@@ -52,21 +52,21 @@ function generateSessionId(): string {
   return Math.random().toString(36).slice(2) + Date.now().toString(36);
 }
 
-export function AskAria({
+export function AskFrontlea({
   demoId,
   brandName = "Luxe Aesthetics",
   greeting,
   quickPrompts,
   intro,
   hideIntro,
-}: AskAriaProps = {}) {
+}: AskFrontleaProps = {}) {
   const initialGreeting: Msg = useMemo(
     () => ({
       who: "aria",
       text:
         greeting ??
         (demoId
-          ? `Hi! I'm Aria — ${brandName}'s AI front desk for this demo. I learned about your services from your website. Ask me anything a real patient would.`
+          ? `Hi! I'm Frontlea — ${brandName}'s AI front desk for this demo. I learned about your services from your website. Ask me anything a real patient would.`
           : DEFAULT_GREETING.text),
     }),
     [greeting, demoId, brandName],
@@ -187,7 +187,7 @@ export function AskAria({
         setError(detail);
         setMessages((prev) => [
           ...prev,
-          { who: "system", text: `Couldn't reach Aria — ${detail}` },
+          { who: "system", text: `Couldn't reach Frontlea — ${detail}` },
         ]);
       } finally {
         setTyping(false);
@@ -216,7 +216,7 @@ export function AskAria({
       {!hideIntro && (
         <div>
           <span className="eyebrow">
-            {intro?.eyebrow ?? (demoId ? `Aria for ${brandName}` : "Ask Aria — try her live")}
+            {intro?.eyebrow ?? (demoId ? `Frontlea for ${brandName}` : "Ask Frontlea — try her live")}
           </span>
           <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-5xl">
             {intro?.heading ?? (
@@ -257,7 +257,7 @@ export function AskAria({
           <div className="mt-6 rounded-2xl border border-dashed border-line bg-bg-soft/40 p-4 text-xs text-ink-soft">
             <strong className="text-ink">Note:</strong> this is a public sandbox with no scheduler
             attached — and conversations are capped at {HARD_LIMIT} turns to keep the demo affordable.
-            In your deployment Aria reads live availability and books in-call.
+            In your deployment Frontlea reads live availability and books in-call.
           </div>
         </div>
       )}
@@ -269,7 +269,7 @@ export function AskAria({
               A
             </div>
             <div>
-              <div className="text-sm font-medium">Aria · {brandName}</div>
+              <div className="text-sm font-medium">Frontlea · {brandName}</div>
               <div className="font-mono text-[0.65rem] uppercase tracking-widest text-emerald">
                 {demoId ? "Custom demo · live · gpt" : "Sandbox · live · gpt"}
               </div>
@@ -323,7 +323,7 @@ export function AskAria({
               onChange={(e) => setInput(e.target.value)}
               placeholder={
                 status === "wrapping"
-                  ? "Aria's about to wrap up — last few replies…"
+                  ? "Frontlea's about to wrap up — last few replies…"
                   : "Ask anything…"
               }
               disabled={inputDisabled}
@@ -369,13 +369,13 @@ function Bubble({ msg }: { msg: Msg }) {
     );
   }
 
-  const isAria = msg.who === "aria";
+  const isFrontlea = msg.who === "aria";
   return (
-    <div className={`rise flex flex-col ${isAria ? "items-start" : "items-end"}`}>
+    <div className={`rise flex flex-col ${isFrontlea ? "items-start" : "items-end"}`}>
       <div
         className={[
           "max-w-[82%] whitespace-pre-wrap rounded-2xl px-3.5 py-2.5 text-[0.92rem] leading-relaxed",
-          isAria
+          isFrontlea
             ? "bg-bg-soft/70 text-ink border border-line"
             : "bg-accent-bg text-accent-fg",
         ].join(" ")}

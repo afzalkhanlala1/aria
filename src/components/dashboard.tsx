@@ -17,24 +17,19 @@ export function DashboardPreview() {
   }, []);
 
   return (
-    <div className="card relative overflow-hidden rounded-3xl shadow-[0_30px_80px_-30px_rgba(13,15,14,0.25)]">
-      {/* Window chrome */}
-      <div className="flex items-center justify-between border-b border-line bg-bg-soft/70 px-5 py-3">
-        <div className="flex items-center gap-2">
-          <span className="size-2.5 rounded-full bg-rose/70" />
-          <span className="size-2.5 rounded-full bg-gold/70" />
-          <span className="size-2.5 rounded-full bg-emerald/70" />
-        </div>
-        <span className="font-mono text-[0.7rem] uppercase tracking-widest text-ink-faint">
-          aria · luxe aesthetics, austin
+    <div className="card relative overflow-hidden rounded-2xl">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-line bg-bg-soft/60 px-5 py-3">
+        <span className="font-mono text-[0.7rem] uppercase tracking-[0.22em] text-ink-soft">
+          Frontlea · Luxe Aesthetics, Austin
         </span>
-        <span className="tag-live">Live</span>
+        <span className="tag-live">Sample dashboard</span>
       </div>
 
       {/* Body */}
       <div className="grid grid-cols-2 gap-3 p-4 lg:p-5">
         <DashCard label="Calls answered" value={calls.toString()} delta="+12 today" />
-        <DashCard label="Booked by Aria" value={booked.toString()} delta="59% conv." accent />
+        <DashCard label="Booked by Frontlea" value={booked.toString()} delta="59% conv." accent />
         <DashCard
           label="Revenue recovered"
           value={`$${recovered.toLocaleString()}`}
@@ -43,13 +38,13 @@ export function DashboardPreview() {
         />
       </div>
 
-      {/* Live call ticker */}
+      {/* Recent activity */}
       <div className="border-t border-line bg-bg-soft/40 px-4 py-3 lg:px-5">
         <div className="mb-2 flex items-center justify-between">
           <span className="font-mono text-[0.65rem] uppercase tracking-widest text-ink-faint">
             Recent activity
           </span>
-          <span className="font-mono text-[0.65rem] text-ink-faint">auto-refresh</span>
+          <span className="font-mono text-[0.65rem] text-ink-faint">last 30 min</span>
         </div>
         <ul className="space-y-1.5">
           <TickerRow

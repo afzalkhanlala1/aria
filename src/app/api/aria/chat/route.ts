@@ -13,7 +13,7 @@ export const runtime = "nodejs";
 const HARD_LIMIT = 30;
 
 /**
- * Once user turns reach this number we append an instruction telling Aria to
+ * Once user turns reach this number we append an instruction telling Frontlea to
  * gracefully wrap up. The model usually does so within 1–2 replies.
  */
 const WRAP_LIMIT = 20;

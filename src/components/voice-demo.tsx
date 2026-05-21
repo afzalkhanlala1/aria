@@ -9,7 +9,7 @@ import {
 } from "@/lib/voice-scripts";
 
 /**
- * Plays a scripted call between Aria and a caller.
+ * Plays a scripted call between Frontlea and a caller.
  *
  * Audio strategy (in order of preference):
  *   1) MP3 files at `/voice/<scenario>/<who>-<index>.mp3` (generated via
@@ -324,7 +324,7 @@ export function VoiceDemo() {
             )}
           </div>
           <div className="flex-1">
-            <div className="font-serif text-xl">Aria · Luxe Aesthetics</div>
+            <div className="font-serif text-xl">Frontlea · Luxe Aesthetics</div>
             <div className="text-sm text-ink-faint">
               Voice:{" "}
               <span className="text-ink-soft">
@@ -347,7 +347,7 @@ export function VoiceDemo() {
           {visible.length === 0 && !playing && (
             <div className="grid h-full place-items-center pt-10 text-center text-ink-faint">
               <div>
-                <p className="font-serif text-2xl text-ink">Press start to hear Aria handle a real scenario.</p>
+                <p className="font-serif text-2xl text-ink">Press start to hear Frontlea handle a real scenario.</p>
                 <p className="mt-2 text-sm">No download required. This is the actual logic and tone deployed for clients.</p>
               </div>
             </div>
@@ -379,7 +379,7 @@ export function VoiceDemo() {
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line bg-bg-soft/50 px-5 py-4">
           <div className="text-xs text-ink-faint">
-            Real Aria deployments answer in 1.8s avg · ElevenLabs voice + Vapi orchestration
+            Real Frontlea deployments answer in 1.8s avg · ElevenLabs voice + Vapi orchestration
           </div>
           <button
             onClick={playing ? stop : start}
@@ -395,7 +395,7 @@ export function VoiceDemo() {
       {/* Side controls */}
       <div className="flex flex-col gap-4">
         <h3 className="font-serif text-2xl leading-tight">
-          Pick a scenario. Watch Aria book the appointment.
+          Pick a scenario. Watch Frontlea book the appointment.
         </h3>
         <p className="text-ink-soft">
           Each scenario reflects an actual flow we deploy — including knowledge of your menu, pricing, providers and after‑hours protocol.
@@ -431,21 +431,21 @@ export function VoiceDemo() {
 }
 
 function TranscriptBubble({ turn }: { turn: VoiceTurn }) {
-  const isAria = turn.who === "aria";
+  const isFrontlea = turn.who === "aria";
   return (
-    <div className={`rise flex ${isAria ? "justify-start" : "justify-end"}`}>
+    <div className={`rise flex ${isFrontlea ? "justify-start" : "justify-end"}`}>
       <div className="max-w-[85%]">
         <div
           className={`mb-1 font-mono text-[0.65rem] uppercase tracking-widest ${
-            isAria ? "text-emerald" : "text-ink-faint"
+            isFrontlea ? "text-emerald" : "text-ink-faint"
           }`}
         >
-          {isAria ? "Aria" : "Caller"}
+          {isFrontlea ? "Frontlea" : "Caller"}
         </div>
         <div
           className={[
             "rounded-2xl px-4 py-2.5 text-[0.95rem] leading-relaxed",
-            isAria
+            isFrontlea
               ? "bg-accent-bg text-accent-fg"
               : "bg-bg-elev text-ink border border-line",
           ].join(" ")}
@@ -464,13 +464,13 @@ function TypingBubble({
   who: "aria" | "caller";
   subtle?: boolean;
 }) {
-  const isAria = who === "aria";
+  const isFrontlea = who === "aria";
   return (
-    <div className={`flex ${isAria ? "justify-start" : "justify-end"}`}>
+    <div className={`flex ${isFrontlea ? "justify-start" : "justify-end"}`}>
       <div
         className={[
           "rounded-2xl px-4 py-3",
-          isAria ? "bg-accent-bg/90 text-accent-fg" : "bg-bg-elev text-ink border border-line",
+          isFrontlea ? "bg-accent-bg/90 text-accent-fg" : "bg-bg-elev text-ink border border-line",
           subtle ? "opacity-60" : "",
         ].join(" ")}
       >

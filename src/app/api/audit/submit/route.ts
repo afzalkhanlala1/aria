@@ -72,7 +72,7 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   try {
-    const subject = `New Aria audit request — ${cleaned.clinic}`;
+    const subject = `New Frontlea audit request — ${cleaned.clinic}`;
     const founderHtml = founderEmailHtml(cleaned, ip);
     const visitorHtml = visitorEmailHtml(cleaned);
 
@@ -87,7 +87,7 @@ export async function POST(req: Request): Promise<Response> {
       resend.emails.send({
         from: FROM,
         to: cleaned.email,
-        subject: "We received your Aria audit request",
+        subject: "We received your Frontlea audit request",
         html: visitorHtml,
       }),
     ]);
@@ -133,13 +133,13 @@ function visitorEmailHtml(d: Required<Payload>): string {
     <p style="font-size:16px;line-height:1.5;color:#45403a;">
       We'll call <strong>${escapeHtml(d.clinic)}</strong> three times over the next business day —
       during business hours, at lunch, and after 6pm — and put together a 4-minute Loom walkthrough showing what happened,
-      a dollar estimate of what those missed calls cost, and a custom Aria demo built on your real menu.
+      a dollar estimate of what those missed calls cost, and a custom Frontlea demo built on your real menu.
     </p>
     <p style="font-size:16px;line-height:1.5;color:#45403a;">Expect it in your inbox within one business day.</p>
     <p style="font-size:14px;line-height:1.5;color:#837b6f;margin-top:24px;">
       Any questions in the meantime, just reply to this email or text <strong>+1 (816) 859-9999</strong>.
     </p>
-    <p style="font-size:14px;color:#837b6f;margin-top:32px;">— Aria · <span style="color:#b1431c;">●</span> live in TX · FL · AZ · NV · SoCal · NY/NJ</p>
+    <p style="font-size:14px;color:#6c7e9c;margin-top:32px;">— Frontlea · Serving TX · FL · AZ · NV · SoCal · NY/NJ</p>
   </body></html>`;
 }
 

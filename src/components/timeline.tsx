@@ -15,13 +15,13 @@ const STEPS = [
     range: "Days 11–13",
     title: "Shadow mode",
     body:
-      "Aria answers every call but transfers to your humans so you can validate transcripts. We tune prompts based on real conversations. By now reactivation has already booked appointments.",
+      "Frontlea answers every call but transfers to your humans so you can validate transcripts. We tune prompts based on real conversations. By now reactivation has already booked appointments.",
   },
   {
     range: "Day 14",
     title: "Go live",
     body:
-      "Aria handles everything that's safely automatable. Edge cases route to your team. Your dashboard goes live. We schedule the first monthly review.",
+      "Frontlea handles everything that's safely automatable. Edge cases route to your team. Your dashboard goes live. We schedule the first monthly review.",
   },
 ];
 
